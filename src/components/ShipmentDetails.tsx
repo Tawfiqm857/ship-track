@@ -4,7 +4,7 @@ import { Separator } from '@/components/ui/separator';
 import { type Shipment } from '@/data/shipments';
 import ShipmentMap from './ShipmentMap';
 import TimelineProgress from './TimelineProgress';
-import { Package, User, MapPin, Weight, Ruler, Calendar } from 'lucide-react';
+import { Package, User, MapPin, Weight, Ruler, Calendar, DollarSign, Shield, Clock } from 'lucide-react';
 
 interface ShipmentDetailsProps {
   shipment: Shipment;
@@ -118,6 +118,65 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
         </CardContent>
       </Card>
 
+      {/* Pricing Information */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center">
+            <DollarSign className="h-5 w-5 mr-2" />
+            Cost Breakdown
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-sm">Product Value</span>
+                <span className="font-medium">{shipment.pricing.currency} {shipment.pricing.subtotal.toLocaleString()}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm">Shipping</span>
+                <span className="font-medium">{shipment.pricing.currency} {shipment.pricing.shipping.toLocaleString()}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm">Insurance</span>
+                <span className="font-medium">{shipment.pricing.currency} {shipment.pricing.insurance.toLocaleString()}</span>
+              </div>
+            </div>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-sm">Custom Duties</span>
+                <span className="font-medium">{shipment.pricing.currency} {shipment.pricing.customDuties.toLocaleString()}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm">Taxes & Fees</span>
+                <span className="font-medium">{shipment.pricing.currency} {shipment.pricing.taxes.toLocaleString()}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <Clock className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-sm capitalize">Priority: {shipment.servicePriority}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <Separator />
+          
+          <div className="flex items-center justify-between text-lg font-bold">
+            <span>Total Cost</span>
+            <span className="text-primary">{shipment.pricing.currency} {shipment.pricing.total.toLocaleString()}</span>
+          </div>
+          
+          <div className="flex items-center justify-between text-sm text-muted-foreground">
+            <div className="flex items-center space-x-2">
+              <Shield className="h-4 w-4" />
+              <span>Insured Value</span>
+            </div>
+            <span>{shipment.pricing.currency} {shipment.insuranceValue.toLocaleString()}</span>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Details Grid */}
       <div className="grid gap-6 md:grid-cols-2">
         {/* Sender & Recipient */}
@@ -178,6 +237,16 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
                 <span className="text-sm">Dimensions</span>
               </div>
               <span className="font-medium">{shipment.dimensions}</span>
+            </div>
+            
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Clock className="h-4 w-4 text-muted-foreground" />
+                <span className="text-sm">Service Priority</span>
+              </div>
+              <Badge variant="outline" className="capitalize">
+                {shipment.servicePriority}
+              </Badge>
             </div>
           </CardContent>
         </Card>

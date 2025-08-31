@@ -35,6 +35,17 @@ export interface Shipment {
   };
   estimatedDelivery: string;
   checkpoints: Checkpoint[];
+  pricing: {
+    subtotal: number;
+    shipping: number;
+    insurance: number;
+    customDuties: number;
+    taxes: number;
+    total: number;
+    currency: string;
+  };
+  insuranceValue: number;
+  servicePriority: 'standard' | 'express' | 'overnight';
 }
 
 export const sampleShipments: Shipment[] = [
@@ -64,6 +75,17 @@ export const sampleShipments: Shipment[] = [
       lng: -83.0458
     },
     estimatedDelivery: '2024-09-05',
+    pricing: {
+      subtotal: 89000.00,
+      shipping: 2500.00,
+      insurance: 890.00,
+      customDuties: 8900.00,
+      taxes: 7120.00,
+      total: 108410.00,
+      currency: 'USD'
+    },
+    insuranceValue: 89000.00,
+    servicePriority: 'express',
     checkpoints: [
       {
         id: '1',
@@ -138,6 +160,17 @@ export const sampleShipments: Shipment[] = [
       lng: -123.1207
     },
     estimatedDelivery: '2024-08-30',
+    pricing: {
+      subtotal: 2499.00,
+      shipping: 25.00,
+      insurance: 24.99,
+      customDuties: 149.94,
+      taxes: 324.87,
+      total: 3023.80,
+      currency: 'USD'
+    },
+    insuranceValue: 2499.00,
+    servicePriority: 'standard',
     checkpoints: [
       {
         id: '1',
@@ -203,6 +236,17 @@ export const sampleShipments: Shipment[] = [
       lng: 126.9780
     },
     estimatedDelivery: '2024-09-10',
+    pricing: {
+      subtotal: 1199.99,
+      shipping: 45.00,
+      insurance: 12.00,
+      customDuties: 119.99,
+      taxes: 155.99,
+      total: 1532.97,
+      currency: 'USD'
+    },
+    insuranceValue: 1199.99,
+    servicePriority: 'express',
     checkpoints: [
       {
         id: '1',
@@ -277,6 +321,17 @@ export const sampleShipments: Shipment[] = [
       lng: -74.0060
     },
     estimatedDelivery: '2024-09-07',
+    pricing: {
+      subtotal: 299.99,
+      shipping: 35.00,
+      insurance: 3.00,
+      customDuties: 15.00,
+      taxes: 38.99,
+      total: 391.98,
+      currency: 'USD'
+    },
+    insuranceValue: 299.99,
+    servicePriority: 'standard',
     checkpoints: [
       {
         id: '1',
