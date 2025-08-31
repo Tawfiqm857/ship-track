@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Package } from "lucide-react";
@@ -23,7 +23,7 @@ const NotFound = () => {
           The page you're looking for doesn't exist or has been moved.
         </p>
         <Button asChild>
-          <a href="/">Return to Home</a>
+          <Link to="/">Return to Home</Link>
         </Button>
       </div>
     </div>

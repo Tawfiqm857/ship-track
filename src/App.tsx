@@ -21,8 +21,8 @@ const App = () => (
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <BrowserRouter>
-            <div className="min-h-screen bg-background text-foreground">
+          <div className="min-h-screen bg-background text-foreground">
+            <BrowserRouter>
               <Navigation />
               <Routes>
                 <Route path="/" element={<Home />} />
@@ -31,8 +31,8 @@ const App = () => (
                 <Route path="/tracking" element={<Tracking />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
-            </div>
-          </BrowserRouter>
+            </BrowserRouter>
+          </div>
         </TooltipProvider>
       </AuthProvider>
     </ThemeProvider>
