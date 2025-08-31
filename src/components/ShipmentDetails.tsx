@@ -47,7 +47,7 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
               <img
                 src={shipment.productImage}
                 alt={shipment.productName}
-                className="w-16 h-16 rounded-lg object-cover"
+                className="w-24 h-24 rounded-lg object-cover"
               />
               <div>
                 <CardTitle className="text-xl">{shipment.productName}</CardTitle>
