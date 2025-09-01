@@ -74,6 +74,12 @@ const Navigation = () => {
                   </div>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
+                    <Link to="/profile" className="w-full cursor-pointer">
+                      <User className="mr-2 h-4 w-4" />
+                      Profile
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
                     <Link to="/tracking" className="w-full cursor-pointer">
                       <Package className="mr-2 h-4 w-4" />
                       Track Shipments

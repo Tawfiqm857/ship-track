@@ -12,6 +12,7 @@ export interface Shipment {
   trackingCode: string;
   productName: string;
   productImage: string;
+  productImages?: string[];
   status: 'delivered' | 'in-transit' | 'processing';
   sender: {
     name: string;
@@ -50,9 +51,15 @@ export interface Shipment {
 
 export const sampleShipments: Shipment[] = [
   {
-    trackingCode: 'CAR123456789',
-    productName: 'Tesla Model X',
-    productImage: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?w=400&h=300&fit=crop',
+    trackingCode: 'CAR23BM76',
+    productName: 'Mercedes-Benz AMG GT 63 S',
+    productImage: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&h=600&fit=crop',
+    productImages: [
+      'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1606016159991-bef20e4a6f05?w=800&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1618843479619-f3d0d3e2c777?w=800&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1606016160892-c57977bf7999?w=800&h=600&fit=crop'
+    ],
     status: 'in-transit',
     sender: {
       name: 'Tesla Motors Inc.',
@@ -61,76 +68,76 @@ export const sampleShipments: Shipment[] = [
       country: 'USA'
     },
     recipient: {
-      name: 'John Smith',
-      address: '123 Main Street',
-      city: 'Toronto',
-      country: 'Canada'
+      name: 'Carethia Williams',
+      address: '1234 Peachtree Street NE',
+      city: 'Atlanta',
+      country: 'USA'
     },
-    weight: '2,270 kg',
-    dimensions: '5.05m × 2.07m × 1.68m',
+    weight: '1,890 kg',
+    dimensions: '4.63m × 1.88m × 1.33m',
     currentLocation: {
-      city: 'Detroit',
+      city: 'Birmingham',
       country: 'USA',
-      lat: 42.3314,
-      lng: -83.0458
+      lat: 33.5186,
+      lng: -86.8104
     },
-    estimatedDelivery: '2024-09-05',
+    estimatedDelivery: '2025-09-01',
     pricing: {
-      subtotal: 89000.00,
-      shipping: 2500.00,
-      insurance: 890.00,
-      customDuties: 8900.00,
-      taxes: 7120.00,
-      total: 108410.00,
+      subtotal: 145000.00,
+      shipping: 3500.00,
+      insurance: 1450.00,
+      customDuties: 14500.00,
+      taxes: 11600.00,
+      total: 176050.00,
       currency: 'USD'
     },
-    insuranceValue: 89000.00,
+    insuranceValue: 145000.00,
     servicePriority: 'express',
     checkpoints: [
       {
         id: '1',
-        date: '2024-08-28',
-        location: 'Austin, TX, USA',
+        date: '2025-08-15',
+        location: 'Stuttgart, Germany',
         status: 'completed',
-        description: 'Package picked up from Tesla facility',
-        lat: 30.2672,
-        lng: -97.7431
+        description: 'Vehicle manufactured and quality checked at Mercedes-Benz facility',
+        lat: 48.7758,
+        lng: 9.1829
       },
       {
         id: '2',
-        date: '2024-08-30',
-        location: 'Dallas, TX, USA',
+        date: '2025-08-20',
+        location: 'Bremerhaven, Germany',
         status: 'completed',
-        description: 'In transit - Left Dallas facility',
-        lat: 32.7767,
-        lng: -96.7970
+        description: 'Loaded onto cargo ship for overseas transport',
+        lat: 53.5396,
+        lng: 8.5810
       },
       {
         id: '3',
-        date: '2024-09-01',
-        location: 'Detroit, MI, USA',
+        date: '2025-08-25',
+        location: 'Birmingham, AL, USA',
         status: 'current',
-        description: 'Currently at Detroit processing center',
-        lat: 42.3314,
-        lng: -83.0458
+        description: 'Arrived at Mercedes-Benz US facility for final preparations',
+        lat: 33.5186,
+        lng: -86.8104
       },
       {
         id: '4',
-        date: '2024-09-04',
-        location: 'Windsor, ON, Canada',
+        date: '2025-08-30',
+        location: 'Atlanta, GA, USA',
         status: 'pending',
-        description: 'Customs clearance',
-        lat: 42.3149,
-        lng: -83.0364
+        description: 'Final inspection and delivery preparation',
+        lat: 33.7490,
+        lng: -84.3880
       },
       {
         id: '5',
-        date: '2024-09-05',
-        location: 'Toronto, ON, Canada',
+        date: '2025-09-01',
+        location: 'Atlanta, GA, USA',
         status: 'pending',
-        description: 'Out for delivery',
-        lat: 43.6532,
-        lng: -79.3832
+        description: 'Scheduled for delivery to customer',
+        lat: 33.7490,
+        lng: -84.3880
       }
     ]
   },
@@ -138,6 +145,11 @@ export const sampleShipments: Shipment[] = [
     trackingCode: 'LAP123456',
     productName: 'MacBook Pro 16"',
     productImage: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&h=300&fit=crop',
+    productImages: [
+      'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=800&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=800&h=600&fit=crop'
+    ],
     status: 'delivered',
     sender: {
       name: 'Apple Inc.',
@@ -214,7 +226,12 @@ export const sampleShipments: Shipment[] = [
     trackingCode: 'PHN987654',
     productName: 'Samsung Galaxy S25 Ultra',
     productImage: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&h=300&fit=crop',
-    status: 'processing',
+    productImages: [
+      'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1565849904461-04a58ad377e0?w=800&h=600&fit=crop'
+    ],
+    status: 'delivered',
     sender: {
       name: 'Samsung Electronics',
       address: '129 Samsung-ro',
@@ -299,7 +316,12 @@ export const sampleShipments: Shipment[] = [
     trackingCode: 'BOK654321',
     productName: 'Harry Potter Collector\'s Edition',
     productImage: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=300&fit=crop',
-    status: 'in-transit',
+    productImages: [
+      'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&h=600&fit=crop'
+    ],
+    status: 'delivered',
     sender: {
       name: 'Bloomsbury Publishing',
       address: '50 Bedford Square',

@@ -1,16 +1,48 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { Progress } from '@/components/ui/progress';
 import { type Shipment } from '@/data/shipments';
 import ShipmentMap from './ShipmentMap';
 import TimelineProgress from './TimelineProgress';
-import { Package, User, MapPin, Weight, Ruler, Calendar, DollarSign, Shield, Clock } from 'lucide-react';
+import { Package, User, MapPin, Weight, Ruler, Calendar, DollarSign, Shield, Clock, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState } from 'react';
 
 interface ShipmentDetailsProps {
   shipment: Shipment;
 }
 
 const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
+  const images = shipment.productImages || [shipment.productImage];
+  
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % images.length);
+  };
+  
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
+  
+  const getDeliveryProgress = () => {
+    const currentDate = new Date();
+    const deliveryDate = new Date(shipment.estimatedDelivery);
+    const completedCheckpoints = shipment.checkpoints.filter(cp => cp.status === 'completed').length;
+    const totalCheckpoints = shipment.checkpoints.length;
+    
+    if (shipment.status === 'delivered') return 100;
+    
+    return Math.round((completedCheckpoints / totalCheckpoints) * 100);
+  };
+  
+  const getDaysUntilDelivery = () => {
+    const currentDate = new Date();
+    const deliveryDate = new Date(shipment.estimatedDelivery);
+    const diffTime = deliveryDate.getTime() - currentDate.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  };
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'delivered':
@@ -43,20 +75,68 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
       <Card>
         <CardHeader>
           <div className="flex items-start justify-between">
-            <div className="flex items-start space-x-4">
-              <img
-                src={shipment.productImage}
-                alt={shipment.productName}
-                className="w-24 h-24 rounded-lg object-cover"
-              />
-              <div>
-                <CardTitle className="text-xl">{shipment.productName}</CardTitle>
+            <div className="flex items-start space-x-6">
+              {/* Image Gallery */}
+              <div className="relative">
+                <img
+                  src={images[currentImageIndex]}
+                  alt={shipment.productName}
+                  className="w-48 h-36 rounded-lg object-cover"
+                />
+                {images.length > 1 && (
+                  <>
+                    <button
+                      onClick={prevImage}
+                      className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-1 transition-colors"
+                    >
+                      <ChevronLeft className="h-4 w-4" />
+                    </button>
+                    <button
+                      onClick={nextImage}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-1 transition-colors"
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </button>
+                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex space-x-1">
+                      {images.map((_, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setCurrentImageIndex(idx)}
+                          className={`w-2 h-2 rounded-full transition-colors ${
+                            idx === currentImageIndex ? 'bg-white' : 'bg-white/50'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
+              
+              <div className="flex-1">
+                <CardTitle className="text-2xl">{shipment.productName}</CardTitle>
                 <p className="text-sm font-mono text-primary mt-1">
                   {shipment.trackingCode}
                 </p>
                 <Badge className={`mt-2 ${getStatusColor(shipment.status)}`}>
                   {getStatusText(shipment.status)}
                 </Badge>
+                
+                {/* Delivery Progress */}
+                <div className="mt-4 space-y-2">
+                  <div className="flex items-center justify-between text-sm">
+                    <span>Delivery Progress</span>
+                    <span className="font-medium">{getDeliveryProgress()}%</span>
+                  </div>
+                  <Progress value={getDeliveryProgress()} className="h-2" />
+                  <p className="text-xs text-muted-foreground">
+                    {getDaysUntilDelivery() > 0 
+                      ? `${getDaysUntilDelivery()} days until delivery`
+                      : shipment.status === 'delivered' 
+                        ? 'Delivered successfully' 
+                        : 'Delivery date has passed'
+                    }
+                  </p>
+                </div>
               </div>
             </div>
           </div>
