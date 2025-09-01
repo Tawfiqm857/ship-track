@@ -3,10 +3,26 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { User, Mail, Phone, MapPin, Package, Calendar, Settings, Edit } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
+import { User, Mail, Phone, MapPin, Package, Calendar, Settings, Edit, Bell, Shield, Download, MessageSquare } from 'lucide-react';
+import { useState } from 'react';
 
 const Profile = () => {
   const { user } = useAuth();
+  const [isEditing, setIsEditing] = useState(false);
+  const [emailNotifications, setEmailNotifications] = useState(true);
+  const [smsNotifications, setSmsNotifications] = useState(true);
+  const [twoFactorAuth, setTwoFactorAuth] = useState(false);
+  const [profileData, setProfileData] = useState({
+    fullName: user?.username || '',
+    email: user?.email || '',
+    phone: '+1 (555) 123-4567',
+    address: '1234 Main Street',
+    city: 'Toronto, ON M5V 3T6',
+    country: 'Canada'
+  });
 
   if (!user) {
     return (
@@ -32,9 +48,13 @@ const Profile = () => {
             <h1 className="text-3xl font-bold">Profile</h1>
             <p className="text-muted-foreground">Manage your account and shipment preferences</p>
           </div>
-          <Button variant="outline" className="flex items-center gap-2">
+          <Button 
+            variant={isEditing ? "default" : "outline"} 
+            className="flex items-center gap-2 transition-smooth"
+            onClick={() => setIsEditing(!isEditing)}
+          >
             <Edit className="h-4 w-4" />
-            Edit Profile
+            {isEditing ? 'Save Changes' : 'Edit Profile'}
           </Button>
         </div>
 
@@ -48,45 +68,93 @@ const Profile = () => {
                   Personal Information
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid gap-4 md:grid-cols-2">
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground">Full Name</p>
-                    <p className="text-lg font-semibold">{user.username}</p>
+              <CardContent className="space-y-6">
+                <div className="grid gap-6 md:grid-cols-2">
+                  <div className="space-y-2">
+                    <Label htmlFor="fullName">Full Name</Label>
+                    {isEditing ? (
+                      <Input
+                        id="fullName"
+                        value={profileData.fullName}
+                        onChange={(e) => setProfileData({...profileData, fullName: e.target.value})}
+                        className="transition-smooth"
+                      />
+                    ) : (
+                      <p className="text-lg font-semibold bg-muted/30 p-3 rounded-lg">{profileData.fullName}</p>
+                    )}
                   </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground">Email</p>
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email</Label>
                     <div className="flex items-center gap-2">
                       <Mail className="h-4 w-4 text-muted-foreground" />
-                      <p className="text-lg">{user.email || 'Not provided'}</p>
+                      {isEditing ? (
+                        <Input
+                          id="email"
+                          type="email"
+                          value={profileData.email}
+                          onChange={(e) => setProfileData({...profileData, email: e.target.value})}
+                          className="flex-1 transition-smooth"
+                        />
+                      ) : (
+                        <p className="text-lg bg-muted/30 p-3 rounded-lg flex-1">{profileData.email}</p>
+                      )}
                     </div>
                   </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground">Phone</p>
+                  <div className="space-y-2">
+                    <Label htmlFor="phone">Phone</Label>
                     <div className="flex items-center gap-2">
                       <Phone className="h-4 w-4 text-muted-foreground" />
-                      <p className="text-lg">+1 (555) 123-4567</p>
+                      {isEditing ? (
+                        <Input
+                          id="phone"
+                          value={profileData.phone}
+                          onChange={(e) => setProfileData({...profileData, phone: e.target.value})}
+                          className="flex-1 transition-smooth"
+                        />
+                      ) : (
+                        <p className="text-lg bg-muted/30 p-3 rounded-lg flex-1">{profileData.phone}</p>
+                      )}
                     </div>
                   </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground">Member Since</p>
+                  <div className="space-y-2">
+                    <Label>Member Since</Label>
                     <div className="flex items-center gap-2">
                       <Calendar className="h-4 w-4 text-muted-foreground" />
-                      <p className="text-lg">January 2024</p>
+                      <p className="text-lg bg-muted/30 p-3 rounded-lg flex-1">January 2024</p>
                     </div>
                   </div>
                 </div>
                 
                 <Separator />
                 
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground mb-2">Default Address</p>
-                  <div className="flex items-start gap-2">
-                    <MapPin className="h-4 w-4 text-muted-foreground mt-1" />
-                    <div>
-                      <p>1234 Main Street</p>
-                      <p>Toronto, ON M5V 3T6</p>
-                      <p>Canada</p>
+                <div className="space-y-4">
+                  <Label>Default Address</Label>
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div className="space-y-2">
+                      <Label htmlFor="address">Street Address</Label>
+                      {isEditing ? (
+                        <Input
+                          id="address"
+                          value={profileData.address}
+                          onChange={(e) => setProfileData({...profileData, address: e.target.value})}
+                          className="transition-smooth"
+                        />
+                      ) : (
+                        <p className="bg-muted/30 p-3 rounded-lg">{profileData.address}</p>
+                      )}
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="city">City & Postal Code</Label>
+                      {isEditing ? (
+                        <Input
+                          id="city"
+                          value={profileData.city}
+                          onChange={(e) => setProfileData({...profileData, city: e.target.value})}
+                          className="transition-smooth"
+                        />
+                      ) : (
+                        <p className="bg-muted/30 p-3 rounded-lg">{profileData.city}</p>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -101,27 +169,51 @@ const Profile = () => {
                   Account Settings
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-medium">Email Notifications</p>
-                    <p className="text-sm text-muted-foreground">Receive updates about your shipments</p>
+              <CardContent className="space-y-6">
+                <div className="flex items-center justify-between p-4 bg-gradient-card rounded-lg border border-border/50">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-primary/10 rounded-lg">
+                      <Bell className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-medium">Email Notifications</p>
+                      <p className="text-sm text-muted-foreground">Receive updates about your shipments</p>
+                    </div>
                   </div>
-                  <Badge variant="secondary">Enabled</Badge>
+                  <Switch 
+                    checked={emailNotifications}
+                    onCheckedChange={setEmailNotifications}
+                  />
                 </div>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-medium">SMS Notifications</p>
-                    <p className="text-sm text-muted-foreground">Get text updates for urgent matters</p>
+                <div className="flex items-center justify-between p-4 bg-gradient-card rounded-lg border border-border/50">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-warning/10 rounded-lg">
+                      <MessageSquare className="h-5 w-5 text-warning" />
+                    </div>
+                    <div>
+                      <p className="font-medium">SMS Notifications</p>
+                      <p className="text-sm text-muted-foreground">Get text updates for urgent matters</p>
+                    </div>
                   </div>
-                  <Badge variant="secondary">Enabled</Badge>
+                  <Switch 
+                    checked={smsNotifications}
+                    onCheckedChange={setSmsNotifications}
+                  />
                 </div>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-medium">Two-Factor Authentication</p>
-                    <p className="text-sm text-muted-foreground">Extra security for your account</p>
+                <div className="flex items-center justify-between p-4 bg-gradient-card rounded-lg border border-border/50">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-success/10 rounded-lg">
+                      <Shield className="h-5 w-5 text-success" />
+                    </div>
+                    <div>
+                      <p className="font-medium">Two-Factor Authentication</p>
+                      <p className="text-sm text-muted-foreground">Extra security for your account</p>
+                    </div>
                   </div>
-                  <Badge variant="outline">Disabled</Badge>
+                  <Switch 
+                    checked={twoFactorAuth}
+                    onCheckedChange={setTwoFactorAuth}
+                  />
                 </div>
               </CardContent>
             </Card>
@@ -172,13 +264,16 @@ const Profile = () => {
                 <CardTitle>Quick Actions</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <Button variant="outline" className="w-full">
+                <Button variant="default" className="w-full bg-gradient-hero hover:opacity-90 transition-smooth">
+                  <Package className="h-4 w-4 mr-2" />
                   Create New Shipment
                 </Button>
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full hover-scale">
+                  <Download className="h-4 w-4 mr-2" />
                   Download Receipt
                 </Button>
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full hover-scale">
+                  <MessageSquare className="h-4 w-4 mr-2" />
                   Contact Support
                 </Button>
               </CardContent>

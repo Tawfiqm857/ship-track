@@ -52,36 +52,36 @@ export interface Shipment {
 export const sampleShipments: Shipment[] = [
   {
     trackingCode: 'CAR23BM76',
-    productName: 'Mercedes-Benz AMG GT 63 S',
-    productImage: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&h=600&fit=crop',
+    productName: 'Mercedes-Benz GLK 350 4MATIC',
+    productImage: 'https://images.unsplash.com/photo-1606016159991-bef20e4a6f05?w=800&h=600&fit=crop',
     productImages: [
-      'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&h=600&fit=crop',
       'https://images.unsplash.com/photo-1606016159991-bef20e4a6f05?w=800&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1618843479619-f3d0d3e2c777?w=800&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&h=600&fit=crop',
       'https://images.unsplash.com/photo-1606016160892-c57977bf7999?w=800&h=600&fit=crop'
     ],
     status: 'in-transit',
     sender: {
-      name: 'Tesla Motors Inc.',
-      address: '1 Tesla Road',
-      city: 'Austin',
+      name: 'Mercedes-Benz USA',
+      address: '1 Mercedes-Benz Drive',
+      city: 'Sandy Springs',
       country: 'USA'
     },
     recipient: {
       name: 'Carethia Williams',
-      address: '1234 Peachtree Street NE',
-      city: 'Atlanta',
+      address: '1583 Elizabeth Ln',
+      city: 'Hampton',
       country: 'USA'
     },
-    weight: '1,890 kg',
-    dimensions: '4.63m × 1.88m × 1.33m',
+    weight: '1,865 kg',
+    dimensions: '4.53m × 1.84m × 1.69m',
     currentLocation: {
       city: 'Birmingham',
       country: 'USA',
       lat: 33.5186,
       lng: -86.8104
     },
-    estimatedDelivery: '2025-09-01',
+    estimatedDelivery: '2025-09-07',
     pricing: {
       subtotal: 145000.00,
       shipping: 3500.00,
@@ -123,21 +123,21 @@ export const sampleShipments: Shipment[] = [
       },
       {
         id: '4',
-        date: '2025-08-30',
-        location: 'Atlanta, GA, USA',
+        date: '2025-09-05',
+        location: 'Hampton, GA, USA',
         status: 'pending',
         description: 'Final inspection and delivery preparation',
-        lat: 33.7490,
-        lng: -84.3880
+        lat: 33.3890,
+        lng: -84.2877
       },
       {
         id: '5',
-        date: '2025-09-01',
-        location: 'Atlanta, GA, USA',
+        date: '2025-09-07',
+        location: 'Hampton, GA, USA',
         status: 'pending',
         description: 'Scheduled for delivery to customer',
-        lat: 33.7490,
-        lng: -84.3880
+        lat: 33.3890,
+        lng: -84.2877
       }
     ]
   },

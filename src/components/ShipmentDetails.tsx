@@ -70,30 +70,30 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       {/* Header Card */}
-      <Card>
-        <CardHeader>
+      <Card className="card-hover border-border/50 shadow-card">
+        <CardHeader className="bg-gradient-card">
           <div className="flex items-start justify-between">
             <div className="flex items-start space-x-6">
               {/* Image Gallery */}
-              <div className="relative">
+              <div className="relative group">
                 <img
                   src={images[currentImageIndex]}
                   alt={shipment.productName}
-                  className="w-48 h-36 rounded-lg object-cover"
+                  className="w-[350px] h-64 rounded-xl object-cover shadow-card border border-border/50 transition-transform duration-300 group-hover:scale-105"
                 />
                 {images.length > 1 && (
                   <>
                     <button
                       onClick={prevImage}
-                      className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-1 transition-colors"
+                      className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-all duration-200 hover:scale-110 backdrop-blur-sm"
                     >
                       <ChevronLeft className="h-4 w-4" />
                     </button>
                     <button
                       onClick={nextImage}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-1 transition-colors"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-all duration-200 hover:scale-110 backdrop-blur-sm"
                     >
                       <ChevronRight className="h-4 w-4" />
                     </button>
@@ -102,8 +102,8 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
                         <button
                           key={idx}
                           onClick={() => setCurrentImageIndex(idx)}
-                          className={`w-2 h-2 rounded-full transition-colors ${
-                            idx === currentImageIndex ? 'bg-white' : 'bg-white/50'
+                          className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                            idx === currentImageIndex ? 'bg-white scale-125' : 'bg-white/50 hover:bg-white/75'
                           }`}
                         />
                       ))}
@@ -145,15 +145,15 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
 
       {/* Current Location & ETA */}
       <div className="grid gap-4 md:grid-cols-2">
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center space-x-3">
-              <div className="p-2 bg-primary/10 rounded-lg">
-                <MapPin className="h-5 w-5 text-primary" />
+        <Card className="card-hover bg-gradient-card border-border/50">
+          <CardContent className="p-6">
+            <div className="flex items-center space-x-4">
+              <div className="p-3 bg-primary/10 rounded-xl shadow-sm">
+                <MapPin className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <p className="text-sm font-medium">Current Location</p>
-                <p className="text-lg font-semibold">
+                <p className="text-sm font-medium text-muted-foreground">Current Location</p>
+                <p className="text-xl font-bold bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
                   {shipment.currentLocation.city}, {shipment.currentLocation.country}
                 </p>
               </div>
@@ -161,15 +161,15 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
           </CardContent>
         </Card>
 
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center space-x-3">
-              <div className="p-2 bg-success/10 rounded-lg">
-                <Calendar className="h-5 w-5 text-success" />
+        <Card className="card-hover bg-gradient-card border-border/50">
+          <CardContent className="p-6">
+            <div className="flex items-center space-x-4">
+              <div className="p-3 bg-success/10 rounded-xl shadow-sm">
+                <Calendar className="h-6 w-6 text-success" />
               </div>
               <div>
-                <p className="text-sm font-medium">Estimated Delivery</p>
-                <p className="text-lg font-semibold">
+                <p className="text-sm font-medium text-muted-foreground">Estimated Delivery</p>
+                <p className="text-xl font-bold bg-gradient-to-r from-success to-success bg-clip-text text-transparent">
                   {new Date(shipment.estimatedDelivery).toLocaleDateString()}
                 </p>
               </div>
