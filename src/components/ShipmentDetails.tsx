@@ -2,10 +2,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Progress } from '@/components/ui/progress';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { type Shipment } from '@/data/shipments';
 import ShipmentMap from './ShipmentMap';
 import TimelineProgress from './TimelineProgress';
-import { Package, User, MapPin, Weight, Ruler, Calendar, DollarSign, Shield, Clock, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Package, User, MapPin, Weight, Ruler, Calendar, DollarSign, Shield, Clock, ChevronLeft, ChevronRight, AlertCircle } from 'lucide-react';
 import { useState } from 'react';
 
 interface ShipmentDetailsProps {
@@ -70,7 +71,8 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
   };
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <TooltipProvider>
+      <div className="space-y-6 animate-fade-in">
       {/* Header Card */}
       <Card className="card-hover border-border/50 shadow-card">
         <CardHeader className="bg-gradient-card">
@@ -224,12 +226,32 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
             </div>
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-sm">Custom Duties</span>
-                <span className="font-medium">{shipment.pricing.currency} {shipment.pricing.customDuties.toLocaleString()}</span>
+                <div className="flex items-center space-x-1">
+                  <span className="text-sm">Custom Duties</span>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <AlertCircle className="h-3 w-3 text-warning" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>This fee has not yet been paid and will be required before delivery.</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
+                <span className="font-medium text-warning">{shipment.pricing.currency} {shipment.pricing.customDuties.toLocaleString()}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm">Taxes & Fees</span>
-                <span className="font-medium">{shipment.pricing.currency} {shipment.pricing.taxes.toLocaleString()}</span>
+                <div className="flex items-center space-x-1">
+                  <span className="text-sm">Taxes & Fees</span>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <AlertCircle className="h-3 w-3 text-warning" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>This fee has not yet been paid and will be required before delivery.</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
+                <span className="font-medium text-warning">{shipment.pricing.currency} {shipment.pricing.taxes.toLocaleString()}</span>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
@@ -331,7 +353,8 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
           </CardContent>
         </Card>
       </div>
-    </div>
+      </div>
+    </TooltipProvider>
   );
 };
 

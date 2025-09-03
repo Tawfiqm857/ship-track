@@ -52,13 +52,12 @@ export interface Shipment {
 export const sampleShipments: Shipment[] = [
   {
     trackingCode: 'CAR23BM76',
-    productName: 'Mercedes-Benz GLK 350 4MATIC',
-    productImage: 'https://images.unsplash.com/photo-1617886322100-64d2ed25c82b?w=800&h=600&fit=crop',
+    productName: 'Mercedes-Benz GLE 63 Coupe',
+    productImage: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&h=600&fit=crop',
     productImages: [
+      'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&h=600&fit=crop',
       'https://images.unsplash.com/photo-1617886322100-64d2ed25c82b?w=800&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=800&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1494976688153-c72967ce2b54?w=800&h=600&fit=crop'
+      'https://images.unsplash.com/photo-1621135802920-133df287f89c?w=800&h=600&fit=crop'
     ],
     status: 'in-transit',
     sender: {
@@ -84,11 +83,11 @@ export const sampleShipments: Shipment[] = [
     estimatedDelivery: '2025-09-07',
     pricing: {
       subtotal: 145000.00,
-      shipping: 3500.00,
-      insurance: 1450.00,
-      customDuties: 14500.00,
-      taxes: 11600.00,
-      total: 176050.00,
+      shipping: 1500.00,
+      insurance: 50.00,
+      customDuties: 200.00,
+      taxes: 35.00,
+      total: 146785.00,
       currency: 'USD'
     },
     insuranceValue: 145000.00,
