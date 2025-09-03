@@ -8,30 +8,24 @@ import { Badge } from '@/components/ui/badge';
 import { sampleShipments, type Shipment } from '@/data/shipments';
 import ShipmentDetails from '@/components/ShipmentDetails';
 import { Search, Package, MapPin, Clock } from 'lucide-react';
-
 const Tracking = () => {
-  const { isAuthenticated } = useAuth();
+  const {
+    isAuthenticated
+  } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedShipment, setSelectedShipment] = useState<Shipment | null>(null);
   const [filteredShipments, setFilteredShipments] = useState<Shipment[]>([]);
-
   useEffect(() => {
     if (searchQuery.trim()) {
-      const filtered = sampleShipments.filter(shipment =>
-        shipment.trackingCode.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        shipment.productName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        shipment.recipient.name.toLowerCase().includes(searchQuery.toLowerCase())
-      );
+      const filtered = sampleShipments.filter(shipment => shipment.trackingCode.toLowerCase().includes(searchQuery.toLowerCase()) || shipment.productName.toLowerCase().includes(searchQuery.toLowerCase()) || shipment.recipient.name.toLowerCase().includes(searchQuery.toLowerCase()));
       setFilteredShipments(filtered);
     } else {
       setFilteredShipments([]);
     }
   }, [searchQuery]);
-
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
-
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'delivered':
@@ -44,7 +38,6 @@ const Tracking = () => {
         return 'bg-muted text-muted-foreground';
     }
   };
-
   const getStatusText = (status: string) => {
     switch (status) {
       case 'delivered':
@@ -57,9 +50,7 @@ const Tracking = () => {
         return status;
     }
   };
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-muted">
+  return <div className="min-h-screen bg-gradient-to-br from-background to-muted">
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">Track Your Shipments</h1>
@@ -72,12 +63,7 @@ const Tracking = () => {
         <div className="mb-8">
           <div className="relative max-w-md">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input
-              placeholder="Search by tracking code, product, or recipient..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
-            />
+            <Input placeholder="Search by tracking code, product, or recipient..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="pl-10" />
           </div>
         </div>
 
@@ -88,31 +74,15 @@ const Tracking = () => {
               Your Shipments ({filteredShipments.length})
             </h2>
             
-            {filteredShipments.length === 0 ? (
-              <Card>
+            {filteredShipments.length === 0 ? <Card>
                 <CardContent className="p-6 text-center">
                   <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                   <p className="text-muted-foreground">
                     {searchQuery.trim() ? 'No shipments found' : 'Enter tracking code to search'}
                   </p>
-                  {!searchQuery.trim() && (
-                    <p className="text-sm text-muted-foreground mt-2">
-                      Try: CAR23BM76
-                    </p>
-                  )}
+                  {!searchQuery.trim()}
                 </CardContent>
-              </Card>
-            ) : (
-              filteredShipments.map((shipment) => (
-                <Card 
-                  key={shipment.trackingCode}
-                  className={`cursor-pointer transition-all duration-200 hover:shadow-card hover:-translate-y-1 ${
-                    selectedShipment?.trackingCode === shipment.trackingCode 
-                      ? 'ring-2 ring-primary shadow-card' 
-                      : ''
-                  }`}
-                  onClick={() => setSelectedShipment(shipment)}
-                >
+              </Card> : filteredShipments.map(shipment => <Card key={shipment.trackingCode} className={`cursor-pointer transition-all duration-200 hover:shadow-card hover:-translate-y-1 ${selectedShipment?.trackingCode === shipment.trackingCode ? 'ring-2 ring-primary shadow-card' : ''}`} onClick={() => setSelectedShipment(shipment)}>
                   <CardContent className="p-4">
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex-1">
@@ -139,17 +109,12 @@ const Tracking = () => {
                       </div>
                     </div>
                   </CardContent>
-                </Card>
-              ))
-            )}
+                </Card>)}
           </div>
 
           {/* Shipment Details */}
           <div className="lg:col-span-2">
-            {selectedShipment ? (
-              <ShipmentDetails shipment={selectedShipment} />
-            ) : (
-              <Card className="h-full">
+            {selectedShipment ? <ShipmentDetails shipment={selectedShipment} /> : <Card className="h-full">
                 <CardContent className="p-8 text-center h-full flex items-center justify-center">
                   <div>
                     <Package className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
@@ -160,13 +125,10 @@ const Tracking = () => {
                     </p>
                   </div>
                 </CardContent>
-              </Card>
-            )}
+              </Card>}
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Tracking;
