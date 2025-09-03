@@ -53,12 +53,12 @@ export const sampleShipments: Shipment[] = [
   {
     trackingCode: 'CAR23BM76',
     productName: 'Mercedes-Benz GLK 350 4MATIC',
-    productImage: 'https://images.unsplash.com/photo-1606016159991-bef20e4a6f05?w=800&h=600&fit=crop',
+    productImage: 'https://images.unsplash.com/photo-1617886322100-64d2ed25c82b?w=800&h=600&fit=crop',
     productImages: [
-      'https://images.unsplash.com/photo-1606016159991-bef20e4a6f05?w=800&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1606016160892-c57977bf7999?w=800&h=600&fit=crop'
+      'https://images.unsplash.com/photo-1617886322100-64d2ed25c82b?w=800&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=800&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1494976688153-c72967ce2b54?w=800&h=600&fit=crop'
     ],
     status: 'in-transit',
     sender: {
