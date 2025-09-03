@@ -13,7 +13,7 @@ const Tracking = () => {
   const { isAuthenticated } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedShipment, setSelectedShipment] = useState<Shipment | null>(null);
-  const [filteredShipments, setFilteredShipments] = useState<Shipment[]>(sampleShipments);
+  const [filteredShipments, setFilteredShipments] = useState<Shipment[]>([]);
 
   useEffect(() => {
     if (searchQuery.trim()) {
@@ -24,7 +24,7 @@ const Tracking = () => {
       );
       setFilteredShipments(filtered);
     } else {
-      setFilteredShipments(sampleShipments);
+      setFilteredShipments([]);
     }
   }, [searchQuery]);
 
@@ -92,7 +92,14 @@ const Tracking = () => {
               <Card>
                 <CardContent className="p-6 text-center">
                   <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <p className="text-muted-foreground">No shipments found</p>
+                  <p className="text-muted-foreground">
+                    {searchQuery.trim() ? 'No shipments found' : 'Enter tracking code to search'}
+                  </p>
+                  {!searchQuery.trim() && (
+                    <p className="text-sm text-muted-foreground mt-2">
+                      Try: CAR23BM76
+                    </p>
+                  )}
                 </CardContent>
               </Card>
             ) : (

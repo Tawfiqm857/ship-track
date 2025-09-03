@@ -19,9 +19,9 @@ const Profile = () => {
     fullName: user?.username || '',
     email: user?.email || '',
     phone: '+1 (555) 123-4567',
-    address: '1234 Main Street',
-    city: 'Toronto, ON M5V 3T6',
-    country: 'Canada'
+    address: '1583 Elizabeth Ln',
+    city: 'Hampton, GA 30228-2606',
+    country: 'USA'
   });
 
   if (!user) {
@@ -33,10 +33,10 @@ const Profile = () => {
   }
 
   const userStats = {
-    totalShipments: 12,
-    delivered: 8,
-    inTransit: 3,
-    processing: 1
+    totalShipments: 1,
+    delivered: 0,
+    inTransit: 1,
+    processing: 0
   };
 
   return (
