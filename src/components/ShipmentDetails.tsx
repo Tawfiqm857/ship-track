@@ -2,7 +2,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Progress } from '@/components/ui/progress';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { type Shipment } from '@/data/shipments';
 import ShipmentMap from './ShipmentMap';
 import TimelineProgress from './TimelineProgress';
@@ -71,19 +70,18 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
   };
 
   return (
-    <TooltipProvider>
-      <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6 animate-fade-in">
       {/* Header Card */}
       <Card className="card-hover border-border/50 shadow-card">
         <CardHeader className="bg-gradient-card">
-          <div className="flex items-start justify-between">
-            <div className="flex items-start space-x-6">
+          <div className="flex flex-col lg:flex-row items-start lg:items-start justify-between space-y-4 lg:space-y-0">
+            <div className="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6 w-full">
               {/* Image Gallery */}
-              <div className="relative group">
+              <div className="relative group w-full sm:w-auto flex-shrink-0">
                 <img
                   src={images[currentImageIndex]}
                   alt={shipment.productName}
-                  className="w-[350px] h-64 rounded-xl object-cover shadow-card border border-border/50 transition-transform duration-300 group-hover:scale-105"
+                  className="w-full sm:w-[280px] lg:w-[350px] h-48 sm:h-56 lg:h-64 rounded-xl object-cover shadow-card border border-border/50 transition-transform duration-300 group-hover:scale-105"
                 />
                 {images.length > 1 && (
                   <>
@@ -114,9 +112,9 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
                 )}
               </div>
               
-              <div className="flex-1">
-                <CardTitle className="text-2xl">{shipment.productName}</CardTitle>
-                <p className="text-sm font-mono text-primary mt-1">
+              <div className="flex-1 min-w-0 w-full">
+                <CardTitle className="text-xl sm:text-2xl break-words">{shipment.productName}</CardTitle>
+                <p className="text-xs sm:text-sm font-mono text-primary mt-1 break-all">
                   {shipment.trackingCode}
                 </p>
                 <Badge className={`mt-2 ${getStatusColor(shipment.status)}`}>
@@ -146,16 +144,16 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
       </Card>
 
       {/* Current Location & ETA */}
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-4 sm:grid-cols-2">
         <Card className="card-hover bg-gradient-card border-border/50">
-          <CardContent className="p-6">
-            <div className="flex items-center space-x-4">
-              <div className="p-3 bg-primary/10 rounded-xl shadow-sm">
-                <MapPin className="h-6 w-6 text-primary" />
+          <CardContent className="p-4 sm:p-6">
+            <div className="flex items-center space-x-3 sm:space-x-4">
+              <div className="p-2 sm:p-3 bg-primary/10 rounded-xl shadow-sm flex-shrink-0">
+                <MapPin className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
               </div>
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Current Location</p>
-                <p className="text-xl font-bold bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
+              <div className="min-w-0 flex-1">
+                <p className="text-xs sm:text-sm font-medium text-muted-foreground">Current Location</p>
+                <p className="text-lg sm:text-xl font-bold bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent break-words">
                   {shipment.currentLocation.city}, {shipment.currentLocation.country}
                 </p>
               </div>
@@ -164,14 +162,14 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
         </Card>
 
         <Card className="card-hover bg-gradient-card border-border/50">
-          <CardContent className="p-6">
-            <div className="flex items-center space-x-4">
-              <div className="p-3 bg-success/10 rounded-xl shadow-sm">
-                <Calendar className="h-6 w-6 text-success" />
+          <CardContent className="p-4 sm:p-6">
+            <div className="flex items-center space-x-3 sm:space-x-4">
+              <div className="p-2 sm:p-3 bg-success/10 rounded-xl shadow-sm flex-shrink-0">
+                <Calendar className="h-5 w-5 sm:h-6 sm:w-6 text-success" />
               </div>
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Estimated Delivery</p>
-                <p className="text-xl font-bold bg-gradient-to-r from-success to-success bg-clip-text text-transparent">
+              <div className="min-w-0 flex-1">
+                <p className="text-xs sm:text-sm font-medium text-muted-foreground">Estimated Delivery</p>
+                <p className="text-lg sm:text-xl font-bold bg-gradient-to-r from-success to-success bg-clip-text text-transparent">
                   {new Date(shipment.estimatedDelivery).toLocaleDateString()}
                 </p>
               </div>
@@ -209,8 +207,8 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="space-y-3">
+          <div className="space-y-4">
+            <div className="grid gap-3 sm:gap-4">
               <div className="flex items-center justify-between">
                 <span className="text-sm">Product Value</span>
                 <span className="font-medium">{shipment.pricing.currency} {shipment.pricing.subtotal.toLocaleString()}</span>
@@ -223,33 +221,23 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
                 <span className="text-sm">Insurance</span>
                 <span className="font-medium">{shipment.pricing.currency} {shipment.pricing.insurance.toLocaleString()}</span>
               </div>
-            </div>
-            <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-1">
-                  <span className="text-sm">Custom Duties</span>
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <AlertCircle className="h-3 w-3 text-warning" />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>This fee has not yet been paid and will be required before delivery.</p>
-                    </TooltipContent>
-                  </Tooltip>
+                <div className="flex flex-col space-y-1">
+                  <div className="flex items-center space-x-1">
+                    <span className="text-sm">Custom Duties</span>
+                    <AlertCircle className="h-3 w-3 text-warning" />
+                  </div>
+                  <span className="text-xs text-warning">Unpaid - Required before delivery</span>
                 </div>
                 <span className="font-medium text-warning">{shipment.pricing.currency} {shipment.pricing.customDuties.toLocaleString()}</span>
               </div>
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-1">
-                  <span className="text-sm">Taxes & Fees</span>
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <AlertCircle className="h-3 w-3 text-warning" />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>This fee has not yet been paid and will be required before delivery.</p>
-                    </TooltipContent>
-                  </Tooltip>
+                <div className="flex flex-col space-y-1">
+                  <div className="flex items-center space-x-1">
+                    <span className="text-sm">Taxes & Fees</span>
+                    <AlertCircle className="h-3 w-3 text-warning" />
+                  </div>
+                  <span className="text-xs text-warning">Unpaid - Required before delivery</span>
                 </div>
                 <span className="font-medium text-warning">{shipment.pricing.currency} {shipment.pricing.taxes.toLocaleString()}</span>
               </div>
@@ -280,23 +268,23 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
       </Card>
 
       {/* Details Grid */}
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-4 sm:gap-6 lg:grid-cols-2">
         {/* Sender & Recipient */}
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center">
-              <User className="h-5 w-5 mr-2" />
+            <CardTitle className="flex items-center text-base sm:text-lg">
+              <User className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
               Sender & Recipient
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 p-4 sm:p-6">
             <div>
-              <p className="font-medium text-sm text-muted-foreground mb-1">FROM</p>
-              <p className="font-semibold">{shipment.sender.name}</p>
-              <p className="text-sm text-muted-foreground">
+              <p className="font-medium text-xs sm:text-sm text-muted-foreground mb-1">FROM</p>
+              <p className="font-semibold text-sm sm:text-base break-words">{shipment.sender.name}</p>
+              <p className="text-xs sm:text-sm text-muted-foreground break-words">
                 {shipment.sender.address}
               </p>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-xs sm:text-sm text-muted-foreground">
                 {shipment.sender.city}, {shipment.sender.country}
               </p>
             </div>
@@ -304,12 +292,12 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
             <Separator />
             
             <div>
-              <p className="font-medium text-sm text-muted-foreground mb-1">TO</p>
-              <p className="font-semibold">{shipment.recipient.name}</p>
-              <p className="text-sm text-muted-foreground">
+              <p className="font-medium text-xs sm:text-sm text-muted-foreground mb-1">TO</p>
+              <p className="font-semibold text-sm sm:text-base break-words">{shipment.recipient.name}</p>
+              <p className="text-xs sm:text-sm text-muted-foreground break-words">
                 {shipment.recipient.address}
               </p>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-xs sm:text-sm text-muted-foreground">
                 {shipment.recipient.city}, {shipment.recipient.country}
               </p>
             </div>
@@ -319,42 +307,41 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
         {/* Package Details */}
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center">
-              <Package className="h-5 w-5 mr-2" />
+            <CardTitle className="flex items-center text-base sm:text-lg">
+              <Package className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
               Package Details
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-3 sm:space-y-4 p-4 sm:p-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
-                <Weight className="h-4 w-4 text-muted-foreground" />
-                <span className="text-sm">Weight</span>
+                <Weight className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground flex-shrink-0" />
+                <span className="text-xs sm:text-sm">Weight</span>
               </div>
-              <span className="font-medium">{shipment.weight}</span>
+              <span className="font-medium text-xs sm:text-sm">{shipment.weight}</span>
             </div>
             
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
-                <Ruler className="h-4 w-4 text-muted-foreground" />
-                <span className="text-sm">Dimensions</span>
+                <Ruler className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground flex-shrink-0" />
+                <span className="text-xs sm:text-sm">Dimensions</span>
               </div>
-              <span className="font-medium">{shipment.dimensions}</span>
+              <span className="font-medium text-xs sm:text-sm break-words text-right">{shipment.dimensions}</span>
             </div>
             
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
-                <Clock className="h-4 w-4 text-muted-foreground" />
-                <span className="text-sm">Service Priority</span>
+                <Clock className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground flex-shrink-0" />
+                <span className="text-xs sm:text-sm">Service Priority</span>
               </div>
-              <Badge variant="outline" className="capitalize">
+              <Badge variant="outline" className="capitalize text-xs">
                 {shipment.servicePriority}
               </Badge>
             </div>
           </CardContent>
         </Card>
       </div>
-      </div>
-    </TooltipProvider>
+    </div>
   );
 };
 
