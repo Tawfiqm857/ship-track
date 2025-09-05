@@ -1,73 +1,37 @@
-# Welcome to your Lovable project
+# 📦 ShipTrack – Educational Shipping Tracker
 
-## Project info
+This is a simple **frontend-only web app** built for **learning purposes**.  
+It demonstrates how to design a **responsive shipping/product tracking interface** using React and TailwindCSS.  
 
-**URL**: https://lovable.dev/projects/8830ce09-cd89-47a7-bc3f-d65d7d24ea73
+⚠️ **Note:** This app does not connect to a real backend.  
+All data (like user auth) is stored in **browser local storage** for demonstration only.
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## 🎯 Learning Objectives
+- Understand how to structure a modern **React app**.
+- Practice **UI/UX design** with **TailwindCSS**.
+- Implement **local storage** for basic session handling.
+- Build a **responsive layout** for desktop and mobile.
+- Work with **images and components** for product visualization.
 
-**Use Lovable**
+---
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/8830ce09-cd89-47a7-bc3f-d65d7d24ea73) and start prompting.
+## 🚀 Features
+- 🔐 **Mock Authentication** – login/logout using local storage.  
+- 🏠 **Homepage** – simple landing page with banners and product highlights.  
+- 🔍 **Shipment Tracking** – enter a tracking ID to simulate shipment status.  
+- 📱 **Responsive UI** – works on phones, tablets, and desktops.  
+- 🖼 **Product Images** – add visual references for learning purposes.  
 
-Changes made via Lovable will be committed automatically to this repo.
+---
 
-**Use your preferred IDE**
+## 🛠 Tech Stack
+- **React** (frontend framework)  
+- **TailwindCSS** (styling)  
+- **LocalStorage API** (for auth persistence)  
+- **Vite / CRA** (bundler & dev server)  
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+---
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/8830ce09-cd89-47a7-bc3f-d65d7d24ea73) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## ⚙️ Installatio
