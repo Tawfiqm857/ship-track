@@ -19,10 +19,10 @@ const Profile = () => {
   const [profileData, setProfileData] = useState({
     fullName: user?.username || '',
     email: user?.email || '',
-    phone: '+1 (555) 123-4567',
-    address: '1583 Elizabeth Ln',
-    city: 'Hampton, GA 30228-2606',
-    country: 'USA'
+    phone: '',
+    address: '',
+    city: '',
+    country: ''
   });
   if (!user) {
     return <div className="min-h-screen flex items-center justify-center">
@@ -80,7 +80,13 @@ const Profile = () => {
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="phone">Phone</Label>
-                    
+                    <div className="flex items-center gap-2">
+                      <Phone className="h-4 w-4 text-muted-foreground" />
+                      {isEditing ? <Input id="phone" type="tel" value={profileData.phone} onChange={e => setProfileData({
+                      ...profileData,
+                      phone: e.target.value
+                    })} className="flex-1 transition-smooth" placeholder="Enter phone number" /> : <p className="text-lg bg-muted/30 p-3 rounded-lg flex-1">{profileData.phone || 'Not provided'}</p>}
+                    </div>
                   </div>
                   <div className="space-y-2">
                     <Label>Member Since</Label>
@@ -101,14 +107,14 @@ const Profile = () => {
                       {isEditing ? <Input id="address" value={profileData.address} onChange={e => setProfileData({
                       ...profileData,
                       address: e.target.value
-                    })} className="transition-smooth" /> : <p className="bg-muted/30 p-3 rounded-lg">{profileData.address}</p>}
+                    })} className="transition-smooth" placeholder="Enter street address" /> : <p className="bg-muted/30 p-3 rounded-lg">{profileData.address || 'Not provided'}</p>}
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="city">City & Postal Code</Label>
                       {isEditing ? <Input id="city" value={profileData.city} onChange={e => setProfileData({
                       ...profileData,
                       city: e.target.value
-                    })} className="transition-smooth" /> : <p className="bg-muted/30 p-3 rounded-lg">{profileData.city}</p>}
+                    })} className="transition-smooth" placeholder="Enter city & postal code" /> : <p className="bg-muted/30 p-3 rounded-lg">{profileData.city || 'Not provided'}</p>}
                     </div>
                   </div>
                 </div>
