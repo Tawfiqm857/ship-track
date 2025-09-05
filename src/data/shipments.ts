@@ -53,11 +53,9 @@ export const sampleShipments: Shipment[] = [
   {
     trackingCode: 'CAR23BM76',
     productName: 'Mercedes-Benz GLE 63 Coupe',
-    productImage: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&h=600&fit=crop',
+    productImage: '/src/assets/mercedes-gle-63-coupe.jpg',
     productImages: [
-      'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1617886322100-64d2ed25c82b?w=800&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1621135802920-133df287f89c?w=800&h=600&fit=crop'
+      '/src/assets/mercedes-gle-63-coupe.jpg'
     ],
     status: 'in-transit',
     sender: {
