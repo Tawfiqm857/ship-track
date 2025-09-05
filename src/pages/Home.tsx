@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
 import { Package, MapPin, Clock, Shield, Users, Globe } from 'lucide-react';
-import heroImage from '@/assets/hero-logistics.jpg';
+const heroImage = '/lovable-uploads/20f186e6-74ba-4aaf-87d5-b3dd9cae547f.png';
 
 const Home = () => {
   const { isAuthenticated } = useAuth();
@@ -48,7 +48,7 @@ const Home = () => {
         <div className="absolute inset-0">
           <img 
             src={heroImage} 
-            alt="Logistics and shipping" 
+            alt="Free shipping on all orders" 
             className="h-full w-full object-cover opacity-20"
           />
           <div className="absolute inset-0 bg-gradient-hero/80" />
