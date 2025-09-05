@@ -8,9 +8,10 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { User, Mail, Phone, MapPin, Package, Calendar, Settings, Edit, Bell, Shield, Download, MessageSquare } from 'lucide-react';
 import { useState } from 'react';
-
 const Profile = () => {
-  const { user } = useAuth();
+  const {
+    user
+  } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [smsNotifications, setSmsNotifications] = useState(true);
@@ -23,24 +24,18 @@ const Profile = () => {
     city: 'Hampton, GA 30228-2606',
     country: 'USA'
   });
-
   if (!user) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
+    return <div className="min-h-screen flex items-center justify-center">
         <p className="text-muted-foreground">Please log in to view your profile.</p>
-      </div>
-    );
+      </div>;
   }
-
   const userStats = {
     totalShipments: 1,
     delivered: 0,
     inTransit: 1,
     processing: 0
   };
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 p-6">
+  return <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 p-6">
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -48,11 +43,7 @@ const Profile = () => {
             <h1 className="text-3xl font-bold">Profile</h1>
             <p className="text-muted-foreground">Manage your account and shipment preferences</p>
           </div>
-          <Button 
-            variant={isEditing ? "default" : "outline"} 
-            className="flex items-center gap-2 transition-smooth"
-            onClick={() => setIsEditing(!isEditing)}
-          >
+          <Button variant={isEditing ? "default" : "outline"} className="flex items-center gap-2 transition-smooth" onClick={() => setIsEditing(!isEditing)}>
             <Edit className="h-4 w-4" />
             {isEditing ? 'Save Changes' : 'Edit Profile'}
           </Button>
@@ -72,49 +63,24 @@ const Profile = () => {
                 <div className="grid gap-6 md:grid-cols-2">
                   <div className="space-y-2">
                     <Label htmlFor="fullName">Full Name</Label>
-                    {isEditing ? (
-                      <Input
-                        id="fullName"
-                        value={profileData.fullName}
-                        onChange={(e) => setProfileData({...profileData, fullName: e.target.value})}
-                        className="transition-smooth"
-                      />
-                    ) : (
-                      <p className="text-lg font-semibold bg-muted/30 p-3 rounded-lg">{profileData.fullName}</p>
-                    )}
+                    {isEditing ? <Input id="fullName" value={profileData.fullName} onChange={e => setProfileData({
+                    ...profileData,
+                    fullName: e.target.value
+                  })} className="transition-smooth" /> : <p className="text-lg font-semibold bg-muted/30 p-3 rounded-lg">{profileData.fullName}</p>}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="email">Email</Label>
                     <div className="flex items-center gap-2">
                       <Mail className="h-4 w-4 text-muted-foreground" />
-                      {isEditing ? (
-                        <Input
-                          id="email"
-                          type="email"
-                          value={profileData.email}
-                          onChange={(e) => setProfileData({...profileData, email: e.target.value})}
-                          className="flex-1 transition-smooth"
-                        />
-                      ) : (
-                        <p className="text-lg bg-muted/30 p-3 rounded-lg flex-1">{profileData.email}</p>
-                      )}
+                      {isEditing ? <Input id="email" type="email" value={profileData.email} onChange={e => setProfileData({
+                      ...profileData,
+                      email: e.target.value
+                    })} className="flex-1 transition-smooth" /> : <p className="text-lg bg-muted/30 p-3 rounded-lg flex-1">{profileData.email}</p>}
                     </div>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="phone">Phone</Label>
-                    <div className="flex items-center gap-2">
-                      <Phone className="h-4 w-4 text-muted-foreground" />
-                      {isEditing ? (
-                        <Input
-                          id="phone"
-                          value={profileData.phone}
-                          onChange={(e) => setProfileData({...profileData, phone: e.target.value})}
-                          className="flex-1 transition-smooth"
-                        />
-                      ) : (
-                        <p className="text-lg bg-muted/30 p-3 rounded-lg flex-1">{profileData.phone}</p>
-                      )}
-                    </div>
+                    
                   </div>
                   <div className="space-y-2">
                     <Label>Member Since</Label>
@@ -132,29 +98,17 @@ const Profile = () => {
                   <div className="grid gap-4 md:grid-cols-2">
                     <div className="space-y-2">
                       <Label htmlFor="address">Street Address</Label>
-                      {isEditing ? (
-                        <Input
-                          id="address"
-                          value={profileData.address}
-                          onChange={(e) => setProfileData({...profileData, address: e.target.value})}
-                          className="transition-smooth"
-                        />
-                      ) : (
-                        <p className="bg-muted/30 p-3 rounded-lg">{profileData.address}</p>
-                      )}
+                      {isEditing ? <Input id="address" value={profileData.address} onChange={e => setProfileData({
+                      ...profileData,
+                      address: e.target.value
+                    })} className="transition-smooth" /> : <p className="bg-muted/30 p-3 rounded-lg">{profileData.address}</p>}
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="city">City & Postal Code</Label>
-                      {isEditing ? (
-                        <Input
-                          id="city"
-                          value={profileData.city}
-                          onChange={(e) => setProfileData({...profileData, city: e.target.value})}
-                          className="transition-smooth"
-                        />
-                      ) : (
-                        <p className="bg-muted/30 p-3 rounded-lg">{profileData.city}</p>
-                      )}
+                      {isEditing ? <Input id="city" value={profileData.city} onChange={e => setProfileData({
+                      ...profileData,
+                      city: e.target.value
+                    })} className="transition-smooth" /> : <p className="bg-muted/30 p-3 rounded-lg">{profileData.city}</p>}
                     </div>
                   </div>
                 </div>
@@ -180,10 +134,7 @@ const Profile = () => {
                       <p className="text-sm text-muted-foreground">Receive updates about your shipments</p>
                     </div>
                   </div>
-                  <Switch 
-                    checked={emailNotifications}
-                    onCheckedChange={setEmailNotifications}
-                  />
+                  <Switch checked={emailNotifications} onCheckedChange={setEmailNotifications} />
                 </div>
                 <div className="flex items-center justify-between p-4 bg-gradient-card rounded-lg border border-border/50">
                   <div className="flex items-center gap-3">
@@ -195,10 +146,7 @@ const Profile = () => {
                       <p className="text-sm text-muted-foreground">Get text updates for urgent matters</p>
                     </div>
                   </div>
-                  <Switch 
-                    checked={smsNotifications}
-                    onCheckedChange={setSmsNotifications}
-                  />
+                  <Switch checked={smsNotifications} onCheckedChange={setSmsNotifications} />
                 </div>
                 <div className="flex items-center justify-between p-4 bg-gradient-card rounded-lg border border-border/50">
                   <div className="flex items-center gap-3">
@@ -210,10 +158,7 @@ const Profile = () => {
                       <p className="text-sm text-muted-foreground">Extra security for your account</p>
                     </div>
                   </div>
-                  <Switch 
-                    checked={twoFactorAuth}
-                    onCheckedChange={setTwoFactorAuth}
-                  />
+                  <Switch checked={twoFactorAuth} onCheckedChange={setTwoFactorAuth} />
                 </div>
               </CardContent>
             </Card>
@@ -281,8 +226,6 @@ const Profile = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Profile;
