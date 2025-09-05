@@ -9,10 +9,19 @@ interface ShipmentMapProps {
 
 // Fix for default markers in Leaflet with Vite
 delete (L.Icon.Default.prototype as any)._getIconUrl;
+
+// Use inline SVG markers to avoid CDN dependency
+const markerSvg = `data:image/svg+xml;base64,${btoa(`
+<svg width="25" height="41" viewBox="0 0 25 41" xmlns="http://www.w3.org/2000/svg">
+  <path fill="#3388ff" stroke="#fff" stroke-width="2" d="M12.5 0C5.6 0 0 5.6 0 12.5c0 6.9 12.5 28.5 12.5 28.5S25 19.4 25 12.5C25 5.6 19.4 0 12.5 0z"/>
+  <circle fill="#fff" cx="12.5" cy="12.5" r="6"/>
+</svg>
+`)}`;
+
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
-  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+  iconUrl: markerSvg,
+  iconRetinaUrl: markerSvg,
+  shadowUrl: '',
 });
 
 const ShipmentMap = ({ shipment }: ShipmentMapProps) => {
@@ -30,10 +39,18 @@ const ShipmentMap = ({ shipment }: ShipmentMapProps) => {
 
     mapInstanceRef.current = map;
 
-    // Add tile layer
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
+    // Add tile layer with error handling
+    const tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors',
+      maxZoom: 19,
+      errorTileUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='
+    });
+    
+    tileLayer.on('tileerror', function(error) {
+      console.warn('Map tile failed to load:', error);
+    });
+    
+    tileLayer.addTo(map);
 
     // Create custom icons
     const currentIcon = L.divIcon({
