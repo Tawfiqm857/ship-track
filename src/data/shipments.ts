@@ -141,9 +141,11 @@ export const sampleShipments: Shipment[] = [
   {
     trackingCode: 'B787FCHEV',
     productName: '2025 Chevrolet Impala',
-    productImage: '/lovable-uploads/20f186e6-74ba-4aaf-87d5-b3dd9cae547f.png',
+    productImage: '/src/assets/chevrolet-impala-1.jpg',
     productImages: [
-      '/lovable-uploads/20f186e6-74ba-4aaf-87d5-b3dd9cae547f.png'
+      '/src/assets/chevrolet-impala-1.jpg',
+      '/src/assets/chevrolet-impala-2.jpg',
+      '/src/assets/chevrolet-impala-3.jpg'
     ],
     status: 'delivered',
     sender: {
