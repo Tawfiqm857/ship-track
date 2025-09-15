@@ -212,8 +212,8 @@ export const sampleShipments: Shipment[] = [
         id: '4',
         date: '2025-09-15',
         location: 'Bakersfield, CA, USA',
-        status: 'current',
-        description: 'In transit to final destination',
+        status: 'pending',
+        description: 'Pending until custom duties and taxes are paid',
         lat: 35.3733,
         lng: -119.0187
       },
