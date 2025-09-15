@@ -141,13 +141,13 @@ export const sampleShipments: Shipment[] = [
   {
     trackingCode: 'B787FCHEV',
     productName: '2025 Chevrolet Impala',
-    productImage: '/src/assets/chevrolet-impala-1.jpg',
+    productImage: '/chevrolet-impala-1.jpg',
     productImages: [
-      '/src/assets/chevrolet-impala-1.jpg',
-      '/src/assets/chevrolet-impala-2.jpg',
-      '/src/assets/chevrolet-impala-3.jpg'
+      '/chevrolet-impala-1.jpg',
+      '/chevrolet-impala-2.jpg',
+      '/chevrolet-impala-3.jpg'
     ],
-    status: 'delivered',
+    status: 'in-transit',
     sender: {
       name: 'General Motors LLC',
       address: '300 Renaissance Center',
@@ -155,20 +155,20 @@ export const sampleShipments: Shipment[] = [
       country: 'USA'
     },
     recipient: {
-      name: 'James Mitchell',
-      address: '2847 Oak Street',
-      city: 'Chicago',
+      name: 'Joan J Cater',
+      address: '44758 Leslie Ct',
+      city: 'Lancaster',
       country: 'USA'
     },
     weight: '1,635 kg',
     dimensions: '5.08m × 1.86m × 1.50m',
     currentLocation: {
-      city: 'Chicago',
+      city: 'Bakersfield',
       country: 'USA',
-      lat: 41.8781,
-      lng: -87.6298
+      lat: 35.3733,
+      lng: -119.0187
     },
-    estimatedDelivery: '2025-09-12',
+    estimatedDelivery: '2025-09-20',
     pricing: {
       subtotal: 42000.00,
       shipping: 800.00,
@@ -210,21 +210,21 @@ export const sampleShipments: Shipment[] = [
       },
       {
         id: '4',
-        date: '2025-09-10',
-        location: 'Chicago, IL, USA',
-        status: 'completed',
-        description: 'Arrived at local dealership for final preparation',
-        lat: 41.8781,
-        lng: -87.6298
+        date: '2025-09-15',
+        location: 'Bakersfield, CA, USA',
+        status: 'current',
+        description: 'In transit to final destination',
+        lat: 35.3733,
+        lng: -119.0187
       },
       {
         id: '5',
-        date: '2025-09-12',
-        location: 'Chicago, IL, USA',
-        status: 'completed',
-        description: 'Successfully delivered to customer',
-        lat: 41.8781,
-        lng: -87.6298
+        date: '2025-09-20',
+        location: 'Lancaster, CA, USA',
+        status: 'pending',
+        description: 'Scheduled for delivery to customer',
+        lat: 34.6868,
+        lng: -118.1542
       }
     ]
   }
