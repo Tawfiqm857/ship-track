@@ -137,5 +137,93 @@ export const sampleShipments: Shipment[] = [
         lng: -84.2877
       }
     ]
+  },
+  {
+    trackingCode: 'B787FCHEV',
+    productName: '2025 Chevrolet Impala',
+    productImage: '/lovable-uploads/20f186e6-74ba-4aaf-87d5-b3dd9cae547f.png',
+    productImages: [
+      '/lovable-uploads/20f186e6-74ba-4aaf-87d5-b3dd9cae547f.png'
+    ],
+    status: 'delivered',
+    sender: {
+      name: 'General Motors LLC',
+      address: '300 Renaissance Center',
+      city: 'Detroit',
+      country: 'USA'
+    },
+    recipient: {
+      name: 'James Mitchell',
+      address: '2847 Oak Street',
+      city: 'Chicago',
+      country: 'USA'
+    },
+    weight: '1,635 kg',
+    dimensions: '5.08m × 1.86m × 1.50m',
+    currentLocation: {
+      city: 'Chicago',
+      country: 'USA',
+      lat: 41.8781,
+      lng: -87.6298
+    },
+    estimatedDelivery: '2025-09-12',
+    pricing: {
+      subtotal: 42000.00,
+      shipping: 800.00,
+      insurance: 25.00,
+      customDuties: 0.00,
+      taxes: 120.00,
+      total: 42945.00,
+      currency: 'USD'
+    },
+    insuranceValue: 42000.00,
+    servicePriority: 'standard',
+    checkpoints: [
+      {
+        id: '1',
+        date: '2025-08-20',
+        location: 'Detroit, MI, USA',
+        status: 'completed',
+        description: 'Vehicle manufactured and quality inspected at GM facility',
+        lat: 42.3314,
+        lng: -83.0458
+      },
+      {
+        id: '2',
+        date: '2025-08-25',
+        location: 'Toledo, OH, USA',
+        status: 'completed',
+        description: 'In transit to distribution center',
+        lat: 41.6528,
+        lng: -83.5379
+      },
+      {
+        id: '3',
+        date: '2025-09-01',
+        location: 'Indianapolis, IN, USA',
+        status: 'completed',
+        description: 'Processed at regional distribution center',
+        lat: 39.7684,
+        lng: -86.1581
+      },
+      {
+        id: '4',
+        date: '2025-09-10',
+        location: 'Chicago, IL, USA',
+        status: 'completed',
+        description: 'Arrived at local dealership for final preparation',
+        lat: 41.8781,
+        lng: -87.6298
+      },
+      {
+        id: '5',
+        date: '2025-09-12',
+        location: 'Chicago, IL, USA',
+        status: 'completed',
+        description: 'Successfully delivered to customer',
+        lat: 41.8781,
+        lng: -87.6298
+      }
+    ]
   }
 ];
