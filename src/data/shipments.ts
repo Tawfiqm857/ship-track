@@ -173,9 +173,9 @@ export const sampleShipments: Shipment[] = [
       subtotal: 42000.00,
       shipping: 800.00,
       insurance: 25.00,
-      customDuties: 0.00,
+      customDuties: 286.96,
       taxes: 120.00,
-      total: 42945.00,
+      total: 43231.96,
       currency: 'USD'
     },
     insuranceValue: 42000.00,
