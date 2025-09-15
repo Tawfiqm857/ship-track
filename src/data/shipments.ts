@@ -168,7 +168,7 @@ export const sampleShipments: Shipment[] = [
       lat: 35.3733,
       lng: -119.0187
     },
-    estimatedDelivery: '2025-09-20',
+    estimatedDelivery: '2025-09-22',
     pricing: {
       subtotal: 42000.00,
       shipping: 800.00,
@@ -219,7 +219,7 @@ export const sampleShipments: Shipment[] = [
       },
       {
         id: '5',
-        date: '2025-09-20',
+        date: '2025-09-22',
         location: 'Lancaster, CA, USA',
         status: 'pending',
         description: 'Scheduled for delivery to customer',
