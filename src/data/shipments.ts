@@ -236,7 +236,8 @@ export const sampleShipments: Shipment[] = [
       '/mercedes-cle-400-1.jpg',
       '/mercedes-cle-400-2.jpg',
       '/mercedes-cle-400-3.jpg',
-      '/mercedes-cle-400-4.jpg'
+      '/mercedes-cle-400-4.jpg',
+      '/mercedes-cle-400-5.jpg'
     ],
     status: 'in-transit',
     sender: {
