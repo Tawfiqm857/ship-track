@@ -227,5 +227,96 @@ export const sampleShipments: Shipment[] = [
         lng: -118.1542
       }
     ]
+  },
+  {
+    trackingCode: 'MER20209G4',
+    productName: 'Mercedes-Benz CLE 400',
+    productImage: '/mercedes-cle-400-1.jpg',
+    productImages: [
+      '/mercedes-cle-400-1.jpg',
+      '/mercedes-cle-400-2.jpg',
+      '/mercedes-cle-400-3.jpg',
+      '/mercedes-cle-400-4.jpg'
+    ],
+    status: 'in-transit',
+    sender: {
+      name: 'Mercedes-Benz USA',
+      address: '1 Mercedes-Benz Drive',
+      city: 'Sandy Springs',
+      country: 'USA'
+    },
+    recipient: {
+      name: 'Customer',
+      address: 'Delivery Address',
+      city: 'Destination City',
+      country: 'USA'
+    },
+    weight: '1,820 kg',
+    dimensions: '4.85m × 1.86m × 1.42m',
+    currentLocation: {
+      city: 'Atlanta',
+      country: 'USA',
+      lat: 33.7490,
+      lng: -84.3880
+    },
+    estimatedDelivery: '2025-12-29',
+    pricing: {
+      subtotal: 62000.00,
+      shipping: 1200.00,
+      insurance: 35.00,
+      customDuties: 0.00,
+      taxes: 150.00,
+      total: 63385.00,
+      currency: 'USD'
+    },
+    insuranceValue: 62000.00,
+    servicePriority: 'express',
+    checkpoints: [
+      {
+        id: '1',
+        date: '2025-12-10',
+        location: 'Bremen, Germany',
+        status: 'completed',
+        description: 'Vehicle manufactured and quality checked at Mercedes-Benz facility',
+        lat: 53.0793,
+        lng: 8.8017
+      },
+      {
+        id: '2',
+        date: '2025-12-15',
+        location: 'Bremerhaven, Germany',
+        status: 'completed',
+        description: 'Loaded onto cargo ship for overseas transport',
+        lat: 53.5396,
+        lng: 8.5810
+      },
+      {
+        id: '3',
+        date: '2025-12-22',
+        location: 'Atlanta, GA, USA',
+        status: 'current',
+        description: 'Arrived at Mercedes-Benz US distribution center',
+        lat: 33.7490,
+        lng: -84.3880
+      },
+      {
+        id: '4',
+        date: '2025-12-27',
+        location: 'Destination City, USA',
+        status: 'pending',
+        description: 'Final inspection and delivery preparation',
+        lat: 33.7490,
+        lng: -84.3880
+      },
+      {
+        id: '5',
+        date: '2025-12-29',
+        location: 'Destination City, USA',
+        status: 'pending',
+        description: 'Scheduled for delivery to customer',
+        lat: 33.7490,
+        lng: -84.3880
+      }
+    ]
   }
 ];
