@@ -319,5 +319,93 @@ export const sampleShipments: Shipment[] = [
         lng: -84.3880
       }
     ]
+  },
+  {
+    trackingCode: 'JWL2024SRN',
+    productName: 'Silver Ring & Necklace Set',
+    productImage: '/placeholder.svg',
+    productImages: [
+      '/placeholder.svg'
+    ],
+    status: 'in-transit',
+    sender: {
+      name: 'Sterling Silver Jewelers',
+      address: '9560 Wilshire Blvd',
+      city: 'Beverly Hills',
+      country: 'USA'
+    },
+    recipient: {
+      name: 'Customer',
+      address: 'Delivery Address',
+      city: 'Washington',
+      country: 'USA'
+    },
+    weight: '0.15 kg',
+    dimensions: '15cm × 10cm × 5cm',
+    currentLocation: {
+      city: 'Denver',
+      country: 'USA',
+      lat: 39.7392,
+      lng: -104.9903
+    },
+    estimatedDelivery: '2025-12-28',
+    pricing: {
+      subtotal: 850.00,
+      shipping: 25.00,
+      insurance: 15.00,
+      customDuties: 0.00,
+      taxes: 68.00,
+      total: 958.00,
+      currency: 'USD'
+    },
+    insuranceValue: 850.00,
+    servicePriority: 'overnight',
+    checkpoints: [
+      {
+        id: '1',
+        date: '2025-12-26',
+        location: 'Beverly Hills, CA, USA',
+        status: 'completed',
+        description: 'Package picked up from Sterling Silver Jewelers',
+        lat: 34.0736,
+        lng: -118.4004
+      },
+      {
+        id: '2',
+        date: '2025-12-26',
+        location: 'Los Angeles, CA, USA',
+        status: 'completed',
+        description: 'Departed from LA sorting facility',
+        lat: 34.0522,
+        lng: -118.2437
+      },
+      {
+        id: '3',
+        date: '2025-12-27',
+        location: 'Denver, CO, USA',
+        status: 'current',
+        description: 'In transit - overnight express shipping',
+        lat: 39.7392,
+        lng: -104.9903
+      },
+      {
+        id: '4',
+        date: '2025-12-28',
+        location: 'Washington, DC, USA',
+        status: 'pending',
+        description: 'Arriving at destination hub',
+        lat: 38.9072,
+        lng: -77.0369
+      },
+      {
+        id: '5',
+        date: '2025-12-28',
+        location: 'Washington, DC, USA',
+        status: 'pending',
+        description: 'Scheduled for delivery to customer',
+        lat: 38.9072,
+        lng: -77.0369
+      }
+    ]
   }
 ];
