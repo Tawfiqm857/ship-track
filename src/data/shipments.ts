@@ -321,11 +321,12 @@ export const sampleShipments: Shipment[] = [
     ]
   },
   {
-    trackingCode: 'JWL2024SRN',
+    trackingCode: 'N44RNG7',
     productName: 'Silver Ring & Necklace Set',
-    productImage: '/placeholder.svg',
+    productImage: '/silver-ring-1.jpg',
     productImages: [
-      '/placeholder.svg'
+      '/silver-ring-1.jpg',
+      '/silver-ring-2.jpg'
     ],
     status: 'in-transit',
     sender: {
