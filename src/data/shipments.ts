@@ -322,7 +322,7 @@ export const sampleShipments: Shipment[] = [
   },
   {
     trackingCode: 'N44RNG7',
-    productName: 'Silver Ring & Necklace Set',
+    productName: '925 Sterling Silver Custom CZ',
     productImage: '/silver-ring-1.jpg',
     productImages: [
       '/silver-ring-1.jpg',
