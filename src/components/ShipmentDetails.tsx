@@ -218,8 +218,14 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
                 <span className="font-medium">{shipment.pricing.currency} {shipment.pricing.shipping.toLocaleString()}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm">Insurance</span>
-                <span className="font-medium">{shipment.pricing.currency} {shipment.pricing.insurance.toLocaleString()}</span>
+                <div className="flex flex-col space-y-1">
+                  <div className="flex items-center space-x-1">
+                    <span className="text-sm">Insurance</span>
+                    <AlertCircle className="h-3 w-3 text-warning" />
+                  </div>
+                  <span className="text-xs text-warning">Unpaid - Required before delivery</span>
+                </div>
+                <span className="font-medium text-warning">{shipment.pricing.currency} {shipment.pricing.insurance.toLocaleString()}</span>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex flex-col space-y-1">
