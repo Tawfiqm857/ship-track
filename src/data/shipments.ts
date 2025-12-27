@@ -337,7 +337,7 @@ export const sampleShipments: Shipment[] = [
     },
     recipient: {
       name: 'Customer',
-      address: 'Delivery Address',
+      address: 'KENISHIA BATTLE',
       city: 'Washington',
       country: 'USA'
     },
