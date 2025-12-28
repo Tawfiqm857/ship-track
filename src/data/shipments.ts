@@ -247,9 +247,9 @@ export const sampleShipments: Shipment[] = [
       country: 'USA'
     },
     recipient: {
-      name: 'Customer',
+      name: 'FULTZ CONNIE',
       address: 'Delivery Address',
-      city: 'Destination City',
+      city: '19037 Inlet Rd, Conneautville, PA 16406',
       country: 'USA'
     },
     weight: '1,820 kg',
@@ -406,6 +406,101 @@ export const sampleShipments: Shipment[] = [
         description: 'Scheduled for delivery to customer',
         lat: 38.9072,
         lng: -77.0369
+      }
+    ]
+  }
+
+
+  ,
+
+    {
+    trackingCode: 'CAR23BM75',
+    productName: 'Mercedes-Benz GLK 350 4MATIC',
+    productImage: 'https://images.unsplash.com/photo-1617886322100-64d2ed25c82b?w=800&h=600&fit=crop',
+    productImages: [
+      'https://images.unsplash.com/photo-1617886322100-64d2ed25c82b?w=800&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=800&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1494976688153-c72967ce2b54?w=800&h=600&fit=crop'
+    ],
+    status: 'in-transit',
+    sender: {
+      name: 'Mercedes-Benz USA',
+      address: '1 Mercedes-Benz Drive',
+      city: 'Sandy Springs',
+      country: 'USA'
+    },
+    recipient: {
+      name: 'Carethia Williams',
+      address: '1583 Elizabeth Ln',
+      city: 'Hampton',
+      country: 'USA'
+    },
+    weight: '1,865 kg',
+    dimensions: '4.53m × 1.84m × 1.69m',
+    currentLocation: {
+      city: 'Birmingham',
+      country: 'USA',
+      lat: 33.5186,
+      lng: -86.8104
+    },
+    estimatedDelivery: '2025-09-07',
+    pricing: {
+      subtotal: 145000.00,
+      shipping: 3500.00,
+      insurance: 1450.00,
+      customDuties: 14500.00,
+      taxes: 11600.00,
+      total: 176050.00,
+      currency: 'USD'
+    },
+    insuranceValue: 145000.00,
+    servicePriority: 'express',
+    checkpoints: [
+      {
+        id: '1',
+        date: '2025-08-15',
+        location: 'Stuttgart, Germany',
+        status: 'completed',
+        description: 'Vehicle manufactured and quality checked at Mercedes-Benz facility',
+        lat: 48.7758,
+        lng: 9.1829
+      },
+      {
+        id: '2',
+        date: '2025-08-20',
+        location: 'Bremerhaven, Germany',
+        status: 'completed',
+        description: 'Loaded onto cargo ship for overseas transport',
+        lat: 53.5396,
+        lng: 8.5810
+      },
+      {
+        id: '3',
+        date: '2025-08-25',
+        location: 'Birmingham, AL, USA',
+        status: 'current',
+        description: 'Arrived at Mercedes-Benz US facility for final preparations',
+        lat: 33.5186,
+        lng: -86.8104
+      },
+      {
+        id: '4',
+        date: '2025-09-05',
+        location: 'Hampton, GA, USA',
+        status: 'pending',
+        description: 'Final inspection and delivery preparation',
+        lat: 33.3890,
+        lng: -84.2877
+      },
+      {
+        id: '5',
+        date: '2025-09-07',
+        location: 'Hampton, GA, USA',
+        status: 'pending',
+        description: 'Scheduled for delivery to customer',
+        lat: 33.3890,
+        lng: -84.2877
       }
     ]
   }
