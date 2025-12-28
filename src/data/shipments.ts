@@ -230,7 +230,7 @@ export const sampleShipments: Shipment[] = [
   },
   {
     trackingCode: 'MER20209G4',
-    productName: 'Mercedes-Benz CLE 400',
+    productName: 'Mercedes-Benz CLS',
     productImage: '/mercedes-cle-400-1.jpg',
     productImages: [
       '/mercedes-cle-400-1.jpg',
