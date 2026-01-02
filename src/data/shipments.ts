@@ -260,7 +260,7 @@ export const sampleShipments: Shipment[] = [
       lat: 33.7490,
       lng: -84.3880
     },
-    estimatedDelivery: '2026-05-01',
+    estimatedDelivery: '2026-02-01',
     pricing: {
       subtotal: 62000.00,
       shipping: 1200.00,
