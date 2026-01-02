@@ -11,6 +11,12 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Tracking from "./pages/Tracking";
 import Profile from "./pages/Profile";
+import Services from "./pages/Services";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
+import CookiePolicy from "./pages/CookiePolicy";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,6 +37,12 @@ const App = () => (
                 <Route path="/register" element={<Register />} />
                 <Route path="/tracking" element={<Tracking />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/services" element={<Services />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/privacy" element={<PrivacyPolicy />} />
+                <Route path="/terms" element={<TermsOfService />} />
+                <Route path="/cookies" element={<CookiePolicy />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>
