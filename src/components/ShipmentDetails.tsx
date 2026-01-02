@@ -128,14 +128,14 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
                     <span className="font-medium">{getDeliveryProgress()}%</span>
                   </div>
                   <Progress value={getDeliveryProgress()} className="h-2" />
-                  <p className="text-xs text-muted-foreground">
+                  {/* <p className="text-xs text-muted-foreground">
                     {getDaysUntilDelivery() > 0 
                       ? `${getDaysUntilDelivery()} days until delivery`
                       : shipment.status === 'delivered' 
                         ? 'Delivered successfully' 
                         : 'Delivery date has passed'
                     }
-                  </p>
+                  </p> */}
                 </div>
               </div>
             </div>
