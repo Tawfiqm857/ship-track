@@ -503,5 +503,95 @@ export const sampleShipments: Shipment[] = [
         lng: -84.2877
       }
     ]
+  },
+  {
+    trackingCode: 'TACT2026BB',
+    productName: 'Tactical Equipment Set',
+    productImage: '/tactical-gear-1.jpg',
+    productImages: [
+      '/tactical-gear-1.jpg',
+      '/tactical-gear-2.jpg',
+      '/tactical-gear-3.jpg'
+    ],
+    status: 'processing',
+    sender: {
+      name: 'UK Tactical Supplies Ltd',
+      address: '45 Commercial Road',
+      city: 'London',
+      country: 'UK'
+    },
+    recipient: {
+      name: 'Barbara Brownin',
+      address: 'Delivery Address',
+      city: 'Florida',
+      country: 'USA'
+    },
+    weight: '8.5 kg',
+    dimensions: '60cm × 45cm × 30cm',
+    currentLocation: {
+      city: 'London',
+      country: 'UK',
+      lat: 51.5074,
+      lng: -0.1278
+    },
+    estimatedDelivery: '2026-02-15',
+    pricing: {
+      subtotal: 2500.00,
+      shipping: 300.00,
+      insurance: 75.00,
+      customDuties: 250.00,
+      taxes: 180.00,
+      total: 3305.00,
+      currency: 'USD'
+    },
+    insuranceValue: 2500.00,
+    servicePriority: 'express',
+    checkpoints: [
+      {
+        id: '1',
+        date: '2026-02-06',
+        location: 'London, UK',
+        status: 'pending',
+        description: 'Package scheduled for pickup from UK Tactical Supplies',
+        lat: 51.5074,
+        lng: -0.1278
+      },
+      {
+        id: '2',
+        date: '2026-02-07',
+        location: 'London Heathrow, UK',
+        status: 'pending',
+        description: 'Awaiting customs clearance and air freight loading',
+        lat: 51.4700,
+        lng: -0.4543
+      },
+      {
+        id: '3',
+        date: '2026-02-10',
+        location: 'Miami, FL, USA',
+        status: 'pending',
+        description: 'Arriving at US customs for inspection',
+        lat: 25.7617,
+        lng: -80.1918
+      },
+      {
+        id: '4',
+        date: '2026-02-13',
+        location: 'Florida, USA',
+        status: 'pending',
+        description: 'Pending payment of shipping fee before delivery',
+        lat: 27.6648,
+        lng: -81.5158
+      },
+      {
+        id: '5',
+        date: '2026-02-15',
+        location: 'Florida, USA',
+        status: 'pending',
+        description: 'Scheduled for delivery to customer',
+        lat: 27.6648,
+        lng: -81.5158
+      }
+    ]
   }
 ];
