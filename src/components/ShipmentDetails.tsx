@@ -214,38 +214,70 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
                 <span className="font-medium">{shipment.pricing.currency} {shipment.pricing.subtotal.toLocaleString()}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm">Shipping</span>
-                <span className="font-medium">{shipment.pricing.currency} {shipment.pricing.shipping.toLocaleString()}</span>
+                {shipment.unpaidFees?.shipping ? (
+                  <div className="flex flex-col space-y-1">
+                    <div className="flex items-center space-x-1">
+                      <span className="text-sm">Shipping</span>
+                      <AlertCircle className="h-3 w-3 text-warning" />
+                    </div>
+                    <span className="text-xs text-warning">Unpaid - Required before delivery</span>
+                  </div>
+                ) : (
+                  <span className="text-sm">Shipping</span>
+                )}
+                <span className={`font-medium ${shipment.unpaidFees?.shipping ? 'text-warning' : ''}`}>
+                  {shipment.pricing.currency} {shipment.pricing.shipping.toLocaleString()}
+                </span>
               </div>
-              <div className="flex items-center justify-between">
-                <div className="flex flex-col space-y-1">
-                  <div className="flex items-center space-x-1">
+              {shipment.pricing.insurance > 0 && (
+                <div className="flex items-center justify-between">
+                  {shipment.unpaidFees?.insurance ? (
+                    <div className="flex flex-col space-y-1">
+                      <div className="flex items-center space-x-1">
+                        <span className="text-sm">Insurance</span>
+                        <AlertCircle className="h-3 w-3 text-warning" />
+                      </div>
+                      <span className="text-xs text-warning">Unpaid - Required before delivery</span>
+                    </div>
+                  ) : (
                     <span className="text-sm">Insurance</span>
-                    <AlertCircle className="h-3 w-3 text-warning" />
-                  </div>
-                  <span className="text-xs text-warning">Unpaid - Required before delivery</span>
+                  )}
+                  <span className={`font-medium ${shipment.unpaidFees?.insurance ? 'text-warning' : ''}`}>
+                    {shipment.pricing.currency} {shipment.pricing.insurance.toLocaleString()}
+                  </span>
                 </div>
-                <span className="font-medium text-warning">{shipment.pricing.currency} {shipment.pricing.insurance.toLocaleString()}</span>
+              )}
+              <div className="flex items-center justify-between">
+                {shipment.unpaidFees?.customDuties ? (
+                  <div className="flex flex-col space-y-1">
+                    <div className="flex items-center space-x-1">
+                      <span className="text-sm">Custom Duties</span>
+                      <AlertCircle className="h-3 w-3 text-warning" />
+                    </div>
+                    <span className="text-xs text-warning">Unpaid - Required before delivery</span>
+                  </div>
+                ) : (
+                  <span className="text-sm">Custom Duties</span>
+                )}
+                <span className={`font-medium ${shipment.unpaidFees?.customDuties ? 'text-warning' : ''}`}>
+                  {shipment.pricing.currency} {shipment.pricing.customDuties.toLocaleString()}
+                </span>
               </div>
               <div className="flex items-center justify-between">
-                <div className="flex flex-col space-y-1">
-                  <div className="flex items-center space-x-1">
-                    <span className="text-sm">Custom Duties</span>
-                    <AlertCircle className="h-3 w-3 text-warning" />
+                {shipment.unpaidFees?.taxes ? (
+                  <div className="flex flex-col space-y-1">
+                    <div className="flex items-center space-x-1">
+                      <span className="text-sm">Taxes & Fees</span>
+                      <AlertCircle className="h-3 w-3 text-warning" />
+                    </div>
+                    <span className="text-xs text-warning">Unpaid - Required before delivery</span>
                   </div>
-                  <span className="text-xs text-warning">Unpaid - Required before delivery</span>
-                </div>
-                <span className="font-medium text-warning">{shipment.pricing.currency} {shipment.pricing.customDuties.toLocaleString()}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex flex-col space-y-1">
-                  <div className="flex items-center space-x-1">
-                    <span className="text-sm">Taxes & Fees</span>
-                    <AlertCircle className="h-3 w-3 text-warning" />
-                  </div>
-                  <span className="text-xs text-warning">Unpaid - Required before delivery</span>
-                </div>
-                <span className="font-medium text-warning">{shipment.pricing.currency} {shipment.pricing.taxes.toLocaleString()}</span>
+                ) : (
+                  <span className="text-sm">Taxes & Fees</span>
+                )}
+                <span className={`font-medium ${shipment.unpaidFees?.taxes ? 'text-warning' : ''}`}>
+                  {shipment.pricing.currency} {shipment.pricing.taxes.toLocaleString()}
+                </span>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">

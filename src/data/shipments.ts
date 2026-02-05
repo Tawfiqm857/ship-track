@@ -45,6 +45,12 @@ export interface Shipment {
     total: number;
     currency: string;
   };
+  unpaidFees?: {
+    shipping?: boolean;
+    insurance?: boolean;
+    customDuties?: boolean;
+    taxes?: boolean;
+  };
   insuranceValue: number;
   servicePriority: 'standard' | 'express' | 'overnight';
 }
@@ -543,6 +549,11 @@ export const sampleShipments: Shipment[] = [
       taxes: 70.00,
       total: 2800.00,
       currency: 'USD'
+    },
+    unpaidFees: {
+      shipping: true,
+      customDuties: true,
+      taxes: true
     },
     insuranceValue: 2500.00,
     servicePriority: 'express',
