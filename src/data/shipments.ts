@@ -538,10 +538,10 @@ export const sampleShipments: Shipment[] = [
     pricing: {
       subtotal: 2500.00,
       shipping: 150.00,
-      insurance: 75.00,
+      insurance: 0.00,
       customDuties: 80.00,
       taxes: 70.00,
-      total: 2875.00,
+      total: 2800.00,
       currency: 'USD'
     },
     insuranceValue: 2500.00,
