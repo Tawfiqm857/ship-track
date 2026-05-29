@@ -306,10 +306,12 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
         <CardContent className="space-y-4">
           <div className="space-y-4">
             <div className="grid gap-3 sm:gap-4">
-              <div className="flex items-center justify-between">
-                <span className="text-sm">Product Value</span>
-                <span className="font-medium">{shipment.pricing.currency} {shipment.pricing.subtotal.toLocaleString()}</span>
-              </div>
+              {shipment.pricing.subtotal > 0 && (
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">{isDocument ? 'Declared Value' : 'Product Value'}</span>
+                  <span className="font-medium">{shipment.pricing.currency} {shipment.pricing.subtotal.toLocaleString()}</span>
+                </div>
+              )}
               <div className="flex items-center justify-between">
                 {shipment.unpaidFees?.shipping ? (
                   <div className="flex flex-col space-y-1">
