@@ -8,8 +8,34 @@ export interface Checkpoint {
   lng: number;
 }
 
+export type ShipmentCategory = 'product' | 'document';
+
+export type DocumentType =
+  | 'check'
+  | 'envelope'
+  | 'letter'
+  | 'certificate'
+  | 'passport'
+  | 'legal-document'
+  | 'confidential-file'
+  | 'other';
+
+export type ConfidentialityLevel = 'standard' | 'confidential' | 'highly-confidential';
+
+export type EnvelopeSize = 'small' | 'medium' | 'large' | 'flat-pack' | 'tube';
+
+export interface DocumentDetails {
+  documentType: DocumentType;
+  envelopeSize: EnvelopeSize;
+  confidentiality: ConfidentialityLevel;
+  dispatchDate: string;
+  pageCount?: number;
+  notes?: string;
+}
+
 export interface Shipment {
   trackingCode: string;
+  category?: ShipmentCategory; // defaults to 'product' for existing entries
   productName: string;
   productImage: string;
   productImages?: string[];
@@ -53,6 +79,7 @@ export interface Shipment {
   };
   insuranceValue: number;
   servicePriority: 'standard' | 'express' | 'overnight';
+  documentDetails?: DocumentDetails;
 }
 
 export const sampleShipments: Shipment[] = [
