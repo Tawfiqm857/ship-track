@@ -80,6 +80,8 @@ export interface Shipment {
   insuranceValue: number;
   servicePriority: 'standard' | 'express' | 'overnight';
   documentDetails?: DocumentDetails;
+  /** Optional password required to view product/document images */
+  viewPassword?: string;
 }
 
 export const sampleShipments: Shipment[] = [
@@ -798,6 +800,95 @@ export const sampleShipments: Shipment[] = [
         description: 'Scheduled for delivery to recipient',
         lat: 30.2672,
         lng: -97.7431
+      }
+    ]
+  },
+  {
+    trackingCode: 'MAIL2026CK2873C',
+    category: 'document',
+    productName: 'Certified Mail® – Payment Request & Check',
+    productImage: '/mail-ck2873c-1.jpg',
+    productImages: ['/mail-ck2873c-1.jpg', '/mail-ck2873c-2.jpg'],
+    viewPassword: 'CK2873C',
+    status: 'in-transit',
+    sender: {
+      name: 'Certified Mail® delivery service',
+      address: '12174 Woodley Avenue',
+      city: 'Granada Hills, CA 91344',
+      country: 'United States of America'
+    },
+    recipient: {
+      name: 'Ty\u2019jaih Tatianna Jackson',
+      address: '3470 NW 5TH ST (Delivery Mailbox)',
+      city: 'Lauderhill, FL',
+      country: 'United States of America'
+    },
+    weight: '0.3 kg',
+    dimensions: 'Standard Secure Envelope',
+    currentLocation: {
+      city: 'Granada Hills, CA',
+      country: 'USA',
+      lat: 34.2728,
+      lng: -118.5048
+    },
+    estimatedDelivery: '2026-06-01',
+    pricing: {
+      subtotal: 0,
+      shipping: 671.82,
+      insurance: 0,
+      customDuties: 0,
+      taxes: 0,
+      total: 671.82,
+      currency: 'USD'
+    },
+    unpaidFees: {
+      shipping: true
+    },
+    insuranceValue: 0,
+    servicePriority: 'express',
+    documentDetails: {
+      documentType: 'check',
+      envelopeSize: 'medium',
+      confidentiality: 'highly-confidential',
+      dispatchDate: '2026-05-30',
+      notes: 'Shipping fee unpaid — payment required before delivery. Images are password-protected.'
+    },
+    checkpoints: [
+      {
+        id: '1',
+        date: '2026-05-30',
+        location: 'Granada Hills, CA, USA',
+        status: 'completed',
+        description: 'Mail picked up from sender (12174 Woodley Avenue)',
+        lat: 34.2728,
+        lng: -118.5048
+      },
+      {
+        id: '2',
+        date: '2026-05-30',
+        location: 'Los Angeles, CA, USA',
+        status: 'current',
+        description: 'Processed at Certified Mail® regional facility',
+        lat: 34.0522,
+        lng: -118.2437
+      },
+      {
+        id: '3',
+        date: '2026-05-31',
+        location: 'Memphis, TN, USA',
+        status: 'pending',
+        description: 'In transit through national sorting hub',
+        lat: 35.1495,
+        lng: -90.0490
+      },
+      {
+        id: '4',
+        date: '2026-06-01',
+        location: 'Lauderhill, FL, USA',
+        status: 'pending',
+        description: 'Out for delivery to recipient mailbox',
+        lat: 26.1403,
+        lng: -80.2131
       }
     ]
   }

@@ -2,10 +2,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Progress } from '@/components/ui/progress';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import { type Shipment } from '@/data/shipments';
 import ShipmentMap from './ShipmentMap';
 import TimelineProgress from './TimelineProgress';
-import { Package, User, MapPin, Weight, Ruler, Calendar, DollarSign, Shield, Clock, ChevronLeft, ChevronRight, AlertCircle, Mail, FileText, Lock, Stamp, FileCheck, Send } from 'lucide-react';
+import { Package, User, MapPin, Weight, Ruler, Calendar, DollarSign, Shield, Clock, ChevronLeft, ChevronRight, AlertCircle, Mail, FileText, Lock, Stamp, FileCheck, Send, Eye } from 'lucide-react';
 import { useState } from 'react';
 
 interface ShipmentDetailsProps {
@@ -18,6 +20,20 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
   const images = (shipment.productImages && shipment.productImages.length > 0)
     ? shipment.productImages
     : (shipment.productImage ? [shipment.productImage] : []);
+  const hasImages = images.length > 0;
+  const requiresPassword = !!shipment.viewPassword;
+  const [unlocked, setUnlocked] = useState(!requiresPassword);
+  const [passwordInput, setPasswordInput] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+
+  const tryUnlock = () => {
+    if (passwordInput.trim() === shipment.viewPassword) {
+      setUnlocked(true);
+      setPasswordError('');
+    } else {
+      setPasswordError('Incorrect password. Please try again.');
+    }
+  };
   
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % images.length);
@@ -78,8 +94,71 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
         <CardHeader className="bg-gradient-card">
           <div className="flex flex-col lg:flex-row items-start lg:items-start justify-between space-y-4 lg:space-y-0">
             <div className="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6 w-full">
-              {/* Visual: Image gallery for products, envelope artwork for documents */}
-              {isDocument ? (
+              {/* Visual: render images when available (with optional password gate), otherwise envelope artwork for documents */}
+              {hasImages ? (
+                <div className="relative group w-full sm:w-auto flex-shrink-0">
+                  {unlocked ? (
+                    <>
+                      <img
+                        src={images[currentImageIndex]}
+                        alt={shipment.productName}
+                        className="w-full sm:w-[280px] lg:w-[350px] h-48 sm:h-56 lg:h-64 rounded-xl object-cover shadow-card border border-border/50 transition-transform duration-300 group-hover:scale-105 bg-muted"
+                      />
+                      {images.length > 1 && (
+                        <>
+                          <button
+                            onClick={prevImage}
+                            className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-all duration-200 hover:scale-110 backdrop-blur-sm"
+                          >
+                            <ChevronLeft className="h-4 w-4" />
+                          </button>
+                          <button
+                            onClick={nextImage}
+                            className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-all duration-200 hover:scale-110 backdrop-blur-sm"
+                          >
+                            <ChevronRight className="h-4 w-4" />
+                          </button>
+                          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex space-x-1">
+                            {images.map((_, idx) => (
+                              <button
+                                key={idx}
+                                onClick={() => setCurrentImageIndex(idx)}
+                                className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                                  idx === currentImageIndex ? 'bg-white scale-125' : 'bg-white/50 hover:bg-white/75'
+                                }`}
+                              />
+                            ))}
+                          </div>
+                        </>
+                      )}
+                    </>
+                  ) : (
+                    <div className="w-full sm:w-[280px] lg:w-[350px] h-48 sm:h-56 lg:h-64 rounded-xl border border-border/50 shadow-card bg-gradient-to-br from-muted via-muted/60 to-primary/10 flex flex-col items-center justify-center p-4 text-center">
+                      <div className="p-3 rounded-full bg-background/80 backdrop-blur shadow mb-3">
+                        <Lock className="h-7 w-7 text-primary" />
+                      </div>
+                      <p className="text-sm font-semibold">Protected Content</p>
+                      <p className="text-xs text-muted-foreground mb-3">Enter password to view images</p>
+                      <div className="flex w-full max-w-[240px] gap-2">
+                        <Input
+                          type="password"
+                          value={passwordInput}
+                          onChange={(e) => setPasswordInput(e.target.value)}
+                          onKeyDown={(e) => e.key === 'Enter' && tryUnlock()}
+                          placeholder="Password"
+                          className="h-9 text-sm"
+                        />
+                        <Button size="sm" onClick={tryUnlock} className="h-9 px-3">
+                          <Eye className="h-4 w-4" />
+                        </Button>
+                      </div>
+                      {passwordError && (
+                        <p className="text-xs text-destructive mt-2">{passwordError}</p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              ) : isDocument ? (
                 <div className="relative w-full sm:w-[280px] lg:w-[350px] h-48 sm:h-56 lg:h-64 flex-shrink-0 rounded-xl overflow-hidden border border-border/50 shadow-card bg-gradient-to-br from-primary/15 via-primary/5 to-accent/20 flex items-center justify-center">
                   <div className="absolute inset-0 opacity-30" style={{
                     backgroundImage: 'repeating-linear-gradient(45deg, hsl(var(--primary)/0.15) 0 10px, transparent 10px 20px)'
@@ -94,42 +173,7 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
                     </Badge>
                   </div>
                 </div>
-              ) : (
-                <div className="relative group w-full sm:w-auto flex-shrink-0">
-                  <img
-                    src={images[currentImageIndex]}
-                    alt={shipment.productName}
-                    className="w-full sm:w-[280px] lg:w-[350px] h-48 sm:h-56 lg:h-64 rounded-xl object-cover shadow-card border border-border/50 transition-transform duration-300 group-hover:scale-105"
-                  />
-                  {images.length > 1 && (
-                    <>
-                      <button
-                        onClick={prevImage}
-                        className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-all duration-200 hover:scale-110 backdrop-blur-sm"
-                      >
-                        <ChevronLeft className="h-4 w-4" />
-                      </button>
-                      <button
-                        onClick={nextImage}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-all duration-200 hover:scale-110 backdrop-blur-sm"
-                      >
-                        <ChevronRight className="h-4 w-4" />
-                      </button>
-                      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex space-x-1">
-                        {images.map((_, idx) => (
-                          <button
-                            key={idx}
-                            onClick={() => setCurrentImageIndex(idx)}
-                            className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                              idx === currentImageIndex ? 'bg-white scale-125' : 'bg-white/50 hover:bg-white/75'
-                            }`}
-                          />
-                        ))}
-                      </div>
-                    </>
-                  )}
-                </div>
-              )}
+              ) : null}
               
               <div className="flex-1 min-w-0 w-full">
                 <CardTitle className="text-xl sm:text-2xl break-words">{shipment.productName}</CardTitle>
