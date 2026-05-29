@@ -367,8 +367,41 @@ const CreateShipment = () => {
                 </div>
               </div>
 
-              <Button type="submit" className="w-full" size="lg">
-                Create Shipment
+              <Separator />
+
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="files">
+                    {category === 'document' ? 'Document Images / Files' : 'Product Images'} (uploaded to cloud storage)
+                  </Label>
+                  <Input
+                    id="files"
+                    type="file"
+                    multiple
+                    accept="image/*,application/pdf"
+                    onChange={(e) => setFiles(Array.from(e.target.files || []))}
+                  />
+                  {files.length > 0 && (
+                    <p className="text-xs text-muted-foreground">{files.length} file(s) selected</p>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="viewPassword">View Password (optional)</Label>
+                  <Input
+                    id="viewPassword"
+                    type="text"
+                    value={form.viewPassword}
+                    onChange={(e) => update('viewPassword', e.target.value)}
+                    placeholder="Leave empty for no password protection"
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    If set, viewers must enter this password to see the uploaded images.
+                  </p>
+                </div>
+              </div>
+
+              <Button type="submit" className="w-full" size="lg" disabled={uploading}>
+                {uploading ? 'Uploading…' : 'Create Shipment'}
               </Button>
             </form>
           </CardContent>
