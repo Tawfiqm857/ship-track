@@ -94,12 +94,6 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
         <CardHeader className="bg-gradient-card">
           <div className="flex flex-col lg:flex-row items-start lg:items-start justify-between space-y-4 lg:space-y-0">
             <div className="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6 w-full">
-              {/* Visual: Image gallery for products, envelope artwork for documents */}
-              {isDocument ? (
-                <div className="relative w-full sm:w-[280px] lg:w-[350px] h-48 sm:h-56 lg:h-64 flex-shrink-0 rounded-xl overflow-hidden border border-border/50 shadow-card bg-gradient-to-br from-primary/15 via-primary/5 to-accent/20 flex items-center justify-center">
-                  <div className="absolute inset-0 opacity-30" style={{
-                    backgroundImage: 'repeating-linear-gradient(45deg, hsl(var(--primary)/0.15) 0 10px, transparent 10px 20px)'
-                  }} />
               {/* Visual: render images when available (with optional password gate), otherwise envelope artwork for documents */}
               {hasImages ? (
                 <div className="relative group w-full sm:w-auto flex-shrink-0">
