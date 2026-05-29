@@ -451,8 +451,8 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center text-base sm:text-lg">
-              <Package className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
-              Package Details
+              {isDocument ? <Mail className="h-4 w-4 sm:h-5 sm:w-5 mr-2" /> : <Package className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />}
+              {isDocument ? 'Mail Details' : 'Package Details'}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3 sm:space-y-4 p-4 sm:p-6">
