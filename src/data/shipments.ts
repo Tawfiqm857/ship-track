@@ -8,8 +8,34 @@ export interface Checkpoint {
   lng: number;
 }
 
+export type ShipmentCategory = 'product' | 'document';
+
+export type DocumentType =
+  | 'check'
+  | 'envelope'
+  | 'letter'
+  | 'certificate'
+  | 'passport'
+  | 'legal-document'
+  | 'confidential-file'
+  | 'other';
+
+export type ConfidentialityLevel = 'standard' | 'confidential' | 'highly-confidential';
+
+export type EnvelopeSize = 'small' | 'medium' | 'large' | 'flat-pack' | 'tube';
+
+export interface DocumentDetails {
+  documentType: DocumentType;
+  envelopeSize: EnvelopeSize;
+  confidentiality: ConfidentialityLevel;
+  dispatchDate: string;
+  pageCount?: number;
+  notes?: string;
+}
+
 export interface Shipment {
   trackingCode: string;
+  category?: ShipmentCategory; // defaults to 'product' for existing entries
   productName: string;
   productImage: string;
   productImages?: string[];
@@ -53,6 +79,7 @@ export interface Shipment {
   };
   insuranceValue: number;
   servicePriority: 'standard' | 'express' | 'overnight';
+  documentDetails?: DocumentDetails;
 }
 
 export const sampleShipments: Shipment[] = [
@@ -602,6 +629,175 @@ export const sampleShipments: Shipment[] = [
         description: 'Scheduled for delivery to customer',
         lat: 27.6648,
         lng: -81.5158
+      }
+    ]
+  },
+  {
+    trackingCode: 'DOC2026LX01',
+    category: 'document',
+    productName: 'Certified Legal Documents',
+    productImage: '',
+    status: 'in-transit',
+    sender: {
+      name: 'Whitman & Hayes LLP',
+      address: '120 Broadway, Suite 2400',
+      city: 'New York',
+      country: 'USA'
+    },
+    recipient: {
+      name: 'Eleanor Vance',
+      address: '88 Kensington High St',
+      city: 'London',
+      country: 'UK'
+    },
+    weight: '0.35 kg',
+    dimensions: 'A4 Envelope',
+    currentLocation: {
+      city: 'New York',
+      country: 'USA',
+      lat: 40.7128,
+      lng: -74.0060
+    },
+    estimatedDelivery: '2026-06-04',
+    pricing: {
+      subtotal: 0,
+      shipping: 45.00,
+      insurance: 0,
+      customDuties: 0,
+      taxes: 0,
+      total: 45.00,
+      currency: 'USD'
+    },
+    insuranceValue: 0,
+    servicePriority: 'express',
+    documentDetails: {
+      documentType: 'legal-document',
+      envelopeSize: 'medium',
+      confidentiality: 'highly-confidential',
+      dispatchDate: '2026-05-29',
+      pageCount: 24,
+      notes: 'Original signed contracts — recipient signature required.'
+    },
+    checkpoints: [
+      {
+        id: '1',
+        date: '2026-05-29',
+        location: 'New York, NY, USA',
+        status: 'completed',
+        description: 'Package picked up from sender',
+        lat: 40.7128,
+        lng: -74.0060
+      },
+      {
+        id: '2',
+        date: '2026-05-30',
+        location: 'JFK International Airport, USA',
+        status: 'completed',
+        description: 'Arrived at international sorting facility',
+        lat: 40.6413,
+        lng: -73.7781
+      },
+      {
+        id: '3',
+        date: '2026-06-02',
+        location: 'London Heathrow, UK',
+        status: 'current',
+        description: 'Out for customs clearance',
+        lat: 51.4700,
+        lng: -0.4543
+      },
+      {
+        id: '4',
+        date: '2026-06-04',
+        location: 'London, UK',
+        status: 'pending',
+        description: 'Scheduled for delivery to recipient',
+        lat: 51.5074,
+        lng: -0.1278
+      }
+    ]
+  },
+  {
+    trackingCode: 'DOC2026PASS22',
+    category: 'document',
+    productName: 'Renewed Passport',
+    productImage: '',
+    status: 'processing',
+    sender: {
+      name: 'US Department of State',
+      address: '600 19th Street NW',
+      city: 'Washington',
+      country: 'USA'
+    },
+    recipient: {
+      name: 'Marcus Hill',
+      address: '742 Evergreen Terrace',
+      city: 'Austin',
+      country: 'USA'
+    },
+    weight: '0.12 kg',
+    dimensions: 'Small Secure Envelope',
+    currentLocation: {
+      city: 'Washington',
+      country: 'USA',
+      lat: 38.9072,
+      lng: -77.0369
+    },
+    estimatedDelivery: '2026-06-08',
+    pricing: {
+      subtotal: 0,
+      shipping: 25.00,
+      insurance: 0,
+      customDuties: 0,
+      taxes: 0,
+      total: 25.00,
+      currency: 'USD'
+    },
+    insuranceValue: 0,
+    servicePriority: 'overnight',
+    documentDetails: {
+      documentType: 'passport',
+      envelopeSize: 'small',
+      confidentiality: 'confidential',
+      dispatchDate: '2026-06-01',
+      notes: 'Tamper-evident envelope. Adult signature required upon delivery.'
+    },
+    checkpoints: [
+      {
+        id: '1',
+        date: '2026-06-01',
+        location: 'Washington, DC, USA',
+        status: 'current',
+        description: 'Document prepared and pending dispatch',
+        lat: 38.9072,
+        lng: -77.0369
+      },
+      {
+        id: '2',
+        date: '2026-06-03',
+        location: 'Memphis, TN, USA',
+        status: 'pending',
+        description: 'Expected at national sorting hub',
+        lat: 35.1495,
+        lng: -90.0490
+      },
+      {
+        id: '3',
+        date: '2026-06-07',
+        location: 'Austin, TX, USA',
+        status: 'pending',
+        description: 'Out for delivery',
+        lat: 30.2672,
+        lng: -97.7431
+      },
+      {
+        id: '4',
+        date: '2026-06-08',
+        location: 'Austin, TX, USA',
+        status: 'pending',
+        description: 'Scheduled for delivery to recipient',
+        lat: 30.2672,
+        lng: -97.7431
       }
     ]
   }

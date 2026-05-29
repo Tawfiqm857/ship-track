@@ -5,7 +5,7 @@ import { Progress } from '@/components/ui/progress';
 import { type Shipment } from '@/data/shipments';
 import ShipmentMap from './ShipmentMap';
 import TimelineProgress from './TimelineProgress';
-import { Package, User, MapPin, Weight, Ruler, Calendar, DollarSign, Shield, Clock, ChevronLeft, ChevronRight, AlertCircle } from 'lucide-react';
+import { Package, User, MapPin, Weight, Ruler, Calendar, DollarSign, Shield, Clock, ChevronLeft, ChevronRight, AlertCircle, Mail, FileText, Lock, Stamp, FileCheck, Send } from 'lucide-react';
 import { useState } from 'react';
 
 interface ShipmentDetailsProps {
@@ -14,8 +14,10 @@ interface ShipmentDetailsProps {
 
 const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  
-  const images = shipment.productImages || [shipment.productImage];
+  const isDocument = shipment.category === 'document';
+  const images = (shipment.productImages && shipment.productImages.length > 0)
+    ? shipment.productImages
+    : (shipment.productImage ? [shipment.productImage] : []);
   
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % images.length);
@@ -76,41 +78,58 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
         <CardHeader className="bg-gradient-card">
           <div className="flex flex-col lg:flex-row items-start lg:items-start justify-between space-y-4 lg:space-y-0">
             <div className="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6 w-full">
-              {/* Image Gallery */}
-              <div className="relative group w-full sm:w-auto flex-shrink-0">
-                <img
-                  src={images[currentImageIndex]}
-                  alt={shipment.productName}
-                  className="w-full sm:w-[280px] lg:w-[350px] h-48 sm:h-56 lg:h-64 rounded-xl object-cover shadow-card border border-border/50 transition-transform duration-300 group-hover:scale-105"
-                />
-                {images.length > 1 && (
-                  <>
-                    <button
-                      onClick={prevImage}
-                      className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-all duration-200 hover:scale-110 backdrop-blur-sm"
-                    >
-                      <ChevronLeft className="h-4 w-4" />
-                    </button>
-                    <button
-                      onClick={nextImage}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-all duration-200 hover:scale-110 backdrop-blur-sm"
-                    >
-                      <ChevronRight className="h-4 w-4" />
-                    </button>
-                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex space-x-1">
-                      {images.map((_, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => setCurrentImageIndex(idx)}
-                          className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                            idx === currentImageIndex ? 'bg-white scale-125' : 'bg-white/50 hover:bg-white/75'
-                          }`}
-                        />
-                      ))}
+              {/* Visual: Image gallery for products, envelope artwork for documents */}
+              {isDocument ? (
+                <div className="relative w-full sm:w-[280px] lg:w-[350px] h-48 sm:h-56 lg:h-64 flex-shrink-0 rounded-xl overflow-hidden border border-border/50 shadow-card bg-gradient-to-br from-primary/15 via-primary/5 to-accent/20 flex items-center justify-center">
+                  <div className="absolute inset-0 opacity-30" style={{
+                    backgroundImage: 'repeating-linear-gradient(45deg, hsl(var(--primary)/0.15) 0 10px, transparent 10px 20px)'
+                  }} />
+                  <div className="relative flex flex-col items-center text-center px-4">
+                    <div className="p-4 rounded-2xl bg-background/80 backdrop-blur shadow-lg mb-3">
+                      <Mail className="h-12 w-12 sm:h-14 sm:w-14 text-primary" />
                     </div>
-                  </>
-                )}
-              </div>
+                    <Badge variant="outline" className="bg-background/80 backdrop-blur">
+                      <Stamp className="h-3 w-3 mr-1" />
+                      Documents & Mail
+                    </Badge>
+                  </div>
+                </div>
+              ) : (
+                <div className="relative group w-full sm:w-auto flex-shrink-0">
+                  <img
+                    src={images[currentImageIndex]}
+                    alt={shipment.productName}
+                    className="w-full sm:w-[280px] lg:w-[350px] h-48 sm:h-56 lg:h-64 rounded-xl object-cover shadow-card border border-border/50 transition-transform duration-300 group-hover:scale-105"
+                  />
+                  {images.length > 1 && (
+                    <>
+                      <button
+                        onClick={prevImage}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-all duration-200 hover:scale-110 backdrop-blur-sm"
+                      >
+                        <ChevronLeft className="h-4 w-4" />
+                      </button>
+                      <button
+                        onClick={nextImage}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-all duration-200 hover:scale-110 backdrop-blur-sm"
+                      >
+                        <ChevronRight className="h-4 w-4" />
+                      </button>
+                      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex space-x-1">
+                        {images.map((_, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => setCurrentImageIndex(idx)}
+                            className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                              idx === currentImageIndex ? 'bg-white scale-125' : 'bg-white/50 hover:bg-white/75'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
+              )}
               
               <div className="flex-1 min-w-0 w-full">
                 <CardTitle className="text-xl sm:text-2xl break-words">{shipment.productName}</CardTitle>
@@ -198,6 +217,84 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
         </CardContent>
       </Card>
 
+      {/* Document Details (only for document shipments) */}
+      {isDocument && shipment.documentDetails && (
+        <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
+          <CardHeader>
+            <CardTitle className="flex items-center text-base sm:text-lg">
+              <FileText className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-primary" />
+              Document Details
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="grid gap-3 sm:gap-4 sm:grid-cols-2 p-4 sm:p-6">
+            <div className="flex items-start space-x-3">
+              <div className="p-2 rounded-lg bg-primary/10">
+                <FileCheck className="h-4 w-4 text-primary" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs text-muted-foreground">Document Type</p>
+                <p className="text-sm font-semibold capitalize break-words">
+                  {shipment.documentDetails.documentType.replace('-', ' ')}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-3">
+              <div className="p-2 rounded-lg bg-primary/10">
+                <Mail className="h-4 w-4 text-primary" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs text-muted-foreground">Envelope Size</p>
+                <p className="text-sm font-semibold capitalize break-words">
+                  {shipment.documentDetails.envelopeSize.replace('-', ' ')}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-3">
+              <div className="p-2 rounded-lg bg-warning/10">
+                <Lock className="h-4 w-4 text-warning" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs text-muted-foreground">Confidentiality</p>
+                <Badge
+                  variant={shipment.documentDetails.confidentiality === 'highly-confidential' ? 'destructive' : 'outline'}
+                  className="capitalize mt-0.5"
+                >
+                  {shipment.documentDetails.confidentiality.replace('-', ' ')}
+                </Badge>
+              </div>
+            </div>
+            <div className="flex items-start space-x-3">
+              <div className="p-2 rounded-lg bg-primary/10">
+                <Send className="h-4 w-4 text-primary" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs text-muted-foreground">Dispatch Date</p>
+                <p className="text-sm font-semibold">
+                  {new Date(shipment.documentDetails.dispatchDate).toLocaleDateString()}
+                </p>
+              </div>
+            </div>
+            {shipment.documentDetails.pageCount !== undefined && (
+              <div className="flex items-start space-x-3">
+                <div className="p-2 rounded-lg bg-primary/10">
+                  <FileText className="h-4 w-4 text-primary" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-xs text-muted-foreground">Page Count</p>
+                  <p className="text-sm font-semibold">{shipment.documentDetails.pageCount} pages</p>
+                </div>
+              </div>
+            )}
+            {shipment.documentDetails.notes && (
+              <div className="sm:col-span-2 p-3 rounded-lg bg-muted/50 border border-border/50">
+                <p className="text-xs text-muted-foreground mb-1">Handling Notes</p>
+                <p className="text-sm">{shipment.documentDetails.notes}</p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
       {/* Pricing Information */}
       <Card>
         <CardHeader>
@@ -209,10 +306,12 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
         <CardContent className="space-y-4">
           <div className="space-y-4">
             <div className="grid gap-3 sm:gap-4">
-              <div className="flex items-center justify-between">
-                <span className="text-sm">Product Value</span>
-                <span className="font-medium">{shipment.pricing.currency} {shipment.pricing.subtotal.toLocaleString()}</span>
-              </div>
+              {shipment.pricing.subtotal > 0 && (
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">{isDocument ? 'Declared Value' : 'Product Value'}</span>
+                  <span className="font-medium">{shipment.pricing.currency} {shipment.pricing.subtotal.toLocaleString()}</span>
+                </div>
+              )}
               <div className="flex items-center justify-between">
                 {shipment.unpaidFees?.shipping ? (
                   <div className="flex flex-col space-y-1">
@@ -247,38 +346,42 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
                   </span>
                 </div>
               )}
-              <div className="flex items-center justify-between">
-                {shipment.unpaidFees?.customDuties ? (
-                  <div className="flex flex-col space-y-1">
-                    <div className="flex items-center space-x-1">
-                      <span className="text-sm">Custom Duties</span>
-                      <AlertCircle className="h-3 w-3 text-warning" />
+              {(shipment.pricing.customDuties > 0 || shipment.unpaidFees?.customDuties) && (
+                <div className="flex items-center justify-between">
+                  {shipment.unpaidFees?.customDuties ? (
+                    <div className="flex flex-col space-y-1">
+                      <div className="flex items-center space-x-1">
+                        <span className="text-sm">Custom Duties</span>
+                        <AlertCircle className="h-3 w-3 text-warning" />
+                      </div>
+                      <span className="text-xs text-warning">Unpaid - Required before delivery</span>
                     </div>
-                    <span className="text-xs text-warning">Unpaid - Required before delivery</span>
-                  </div>
-                ) : (
-                  <span className="text-sm">Custom Duties</span>
-                )}
-                <span className={`font-medium ${shipment.unpaidFees?.customDuties ? 'text-warning' : ''}`}>
-                  {shipment.pricing.currency} {shipment.pricing.customDuties.toLocaleString()}
-                </span>
-              </div>
-              <div className="flex items-center justify-between">
-                {shipment.unpaidFees?.taxes ? (
-                  <div className="flex flex-col space-y-1">
-                    <div className="flex items-center space-x-1">
-                      <span className="text-sm">Taxes & Fees</span>
-                      <AlertCircle className="h-3 w-3 text-warning" />
+                  ) : (
+                    <span className="text-sm">Custom Duties</span>
+                  )}
+                  <span className={`font-medium ${shipment.unpaidFees?.customDuties ? 'text-warning' : ''}`}>
+                    {shipment.pricing.currency} {shipment.pricing.customDuties.toLocaleString()}
+                  </span>
+                </div>
+              )}
+              {(shipment.pricing.taxes > 0 || shipment.unpaidFees?.taxes) && (
+                <div className="flex items-center justify-between">
+                  {shipment.unpaidFees?.taxes ? (
+                    <div className="flex flex-col space-y-1">
+                      <div className="flex items-center space-x-1">
+                        <span className="text-sm">Taxes & Fees</span>
+                        <AlertCircle className="h-3 w-3 text-warning" />
+                      </div>
+                      <span className="text-xs text-warning">Unpaid - Required before delivery</span>
                     </div>
-                    <span className="text-xs text-warning">Unpaid - Required before delivery</span>
-                  </div>
-                ) : (
-                  <span className="text-sm">Taxes & Fees</span>
-                )}
-                <span className={`font-medium ${shipment.unpaidFees?.taxes ? 'text-warning' : ''}`}>
-                  {shipment.pricing.currency} {shipment.pricing.taxes.toLocaleString()}
-                </span>
-              </div>
+                  ) : (
+                    <span className="text-sm">Taxes & Fees</span>
+                  )}
+                  <span className={`font-medium ${shipment.unpaidFees?.taxes ? 'text-warning' : ''}`}>
+                    {shipment.pricing.currency} {shipment.pricing.taxes.toLocaleString()}
+                  </span>
+                </div>
+              )}
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <Clock className="h-4 w-4 text-muted-foreground" />
@@ -295,13 +398,15 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
             <span className="text-primary">{shipment.pricing.currency} {shipment.pricing.total.toLocaleString()}</span>
           </div>
           
-          <div className="flex items-center justify-between text-sm text-muted-foreground">
-            <div className="flex items-center space-x-2">
-              <Shield className="h-4 w-4" />
-              <span>Insured Value</span>
+          {shipment.insuranceValue > 0 && (
+            <div className="flex items-center justify-between text-sm text-muted-foreground">
+              <div className="flex items-center space-x-2">
+                <Shield className="h-4 w-4" />
+                <span>Insured Value</span>
+              </div>
+              <span>{shipment.pricing.currency} {shipment.insuranceValue.toLocaleString()}</span>
             </div>
-            <span>{shipment.pricing.currency} {shipment.insuranceValue.toLocaleString()}</span>
-          </div>
+          )}
         </CardContent>
       </Card>
 
@@ -346,8 +451,8 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center text-base sm:text-lg">
-              <Package className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
-              Package Details
+              {isDocument ? <Mail className="h-4 w-4 sm:h-5 sm:w-5 mr-2" /> : <Package className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />}
+              {isDocument ? 'Mail Details' : 'Package Details'}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3 sm:space-y-4 p-4 sm:p-6">
