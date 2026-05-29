@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -42,13 +43,17 @@ const CreateShipment = () => {
     // pricing
     shipping: '',
     subtotal: '',
+    // image protection
+    viewPassword: '',
   });
+  const [files, setFiles] = useState<File[]>([]);
+  const [uploading, setUploading] = useState(false);
 
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   const update = (k: string, v: string) => setForm((f) => ({ ...f, [k]: v }));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const requiredBase = ['productName', 'senderName', 'recipientName', 'estimatedDelivery'];
@@ -57,6 +62,30 @@ const CreateShipment = () => {
         toast({ title: 'Missing fields', description: `Please fill in all required fields.`, variant: 'destructive' });
         return;
       }
+    }
+
+    // Upload any selected files to cloud storage
+    let uploadedUrls: string[] = [];
+    if (files.length > 0) {
+      setUploading(true);
+      try {
+        for (const file of files) {
+          const ext = file.name.split('.').pop() || 'bin';
+          const path = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+          const { error } = await supabase.storage.from('shipment-files').upload(path, file, {
+            cacheControl: '3600',
+            upsert: false,
+          });
+          if (error) throw error;
+          const { data } = supabase.storage.from('shipment-files').getPublicUrl(path);
+          uploadedUrls.push(data.publicUrl);
+        }
+      } catch (err: any) {
+        setUploading(false);
+        toast({ title: 'Upload failed', description: err.message || 'Could not upload files', variant: 'destructive' });
+        return;
+      }
+      setUploading(false);
     }
 
     const shipping = parseFloat(form.shipping || '0') || 0;
@@ -68,7 +97,9 @@ const CreateShipment = () => {
       trackingCode,
       category,
       productName: form.productName,
-      productImage: '',
+      productImage: uploadedUrls[0] || '',
+      productImages: uploadedUrls.length > 0 ? uploadedUrls : undefined,
+      viewPassword: form.viewPassword || undefined,
       status: 'processing',
       sender: {
         name: form.senderName,
