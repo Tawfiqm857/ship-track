@@ -5,7 +5,7 @@ import { Progress } from '@/components/ui/progress';
 import { type Shipment } from '@/data/shipments';
 import ShipmentMap from './ShipmentMap';
 import TimelineProgress from './TimelineProgress';
-import { Package, User, MapPin, Weight, Ruler, Calendar, DollarSign, Shield, Clock, ChevronLeft, ChevronRight, AlertCircle } from 'lucide-react';
+import { Package, User, MapPin, Weight, Ruler, Calendar, DollarSign, Shield, Clock, ChevronLeft, ChevronRight, AlertCircle, Mail, FileText, Lock, Stamp, FileCheck, Send } from 'lucide-react';
 import { useState } from 'react';
 
 interface ShipmentDetailsProps {
