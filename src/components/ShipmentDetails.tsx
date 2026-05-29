@@ -398,13 +398,15 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
             <span className="text-primary">{shipment.pricing.currency} {shipment.pricing.total.toLocaleString()}</span>
           </div>
           
-          <div className="flex items-center justify-between text-sm text-muted-foreground">
-            <div className="flex items-center space-x-2">
-              <Shield className="h-4 w-4" />
-              <span>Insured Value</span>
+          {shipment.insuranceValue > 0 && (
+            <div className="flex items-center justify-between text-sm text-muted-foreground">
+              <div className="flex items-center space-x-2">
+                <Shield className="h-4 w-4" />
+                <span>Insured Value</span>
+              </div>
+              <span>{shipment.pricing.currency} {shipment.insuranceValue.toLocaleString()}</span>
             </div>
-            <span>{shipment.pricing.currency} {shipment.insuranceValue.toLocaleString()}</span>
-          </div>
+          )}
         </CardContent>
       </Card>
 
