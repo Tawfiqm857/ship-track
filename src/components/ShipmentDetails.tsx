@@ -14,8 +14,10 @@ interface ShipmentDetailsProps {
 
 const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  
-  const images = shipment.productImages || [shipment.productImage];
+  const isDocument = shipment.category === 'document';
+  const images = (shipment.productImages && shipment.productImages.length > 0)
+    ? shipment.productImages
+    : (shipment.productImage ? [shipment.productImage] : []);
   
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % images.length);
