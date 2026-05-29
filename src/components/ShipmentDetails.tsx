@@ -217,6 +217,84 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
         </CardContent>
       </Card>
 
+      {/* Document Details (only for document shipments) */}
+      {isDocument && shipment.documentDetails && (
+        <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
+          <CardHeader>
+            <CardTitle className="flex items-center text-base sm:text-lg">
+              <FileText className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-primary" />
+              Document Details
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="grid gap-3 sm:gap-4 sm:grid-cols-2 p-4 sm:p-6">
+            <div className="flex items-start space-x-3">
+              <div className="p-2 rounded-lg bg-primary/10">
+                <FileCheck className="h-4 w-4 text-primary" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs text-muted-foreground">Document Type</p>
+                <p className="text-sm font-semibold capitalize break-words">
+                  {shipment.documentDetails.documentType.replace('-', ' ')}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-3">
+              <div className="p-2 rounded-lg bg-primary/10">
+                <Mail className="h-4 w-4 text-primary" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs text-muted-foreground">Envelope Size</p>
+                <p className="text-sm font-semibold capitalize break-words">
+                  {shipment.documentDetails.envelopeSize.replace('-', ' ')}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-3">
+              <div className="p-2 rounded-lg bg-warning/10">
+                <Lock className="h-4 w-4 text-warning" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs text-muted-foreground">Confidentiality</p>
+                <Badge
+                  variant={shipment.documentDetails.confidentiality === 'highly-confidential' ? 'destructive' : 'outline'}
+                  className="capitalize mt-0.5"
+                >
+                  {shipment.documentDetails.confidentiality.replace('-', ' ')}
+                </Badge>
+              </div>
+            </div>
+            <div className="flex items-start space-x-3">
+              <div className="p-2 rounded-lg bg-primary/10">
+                <Send className="h-4 w-4 text-primary" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs text-muted-foreground">Dispatch Date</p>
+                <p className="text-sm font-semibold">
+                  {new Date(shipment.documentDetails.dispatchDate).toLocaleDateString()}
+                </p>
+              </div>
+            </div>
+            {shipment.documentDetails.pageCount !== undefined && (
+              <div className="flex items-start space-x-3">
+                <div className="p-2 rounded-lg bg-primary/10">
+                  <FileText className="h-4 w-4 text-primary" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-xs text-muted-foreground">Page Count</p>
+                  <p className="text-sm font-semibold">{shipment.documentDetails.pageCount} pages</p>
+                </div>
+              </div>
+            )}
+            {shipment.documentDetails.notes && (
+              <div className="sm:col-span-2 p-3 rounded-lg bg-muted/50 border border-border/50">
+                <p className="text-xs text-muted-foreground mb-1">Handling Notes</p>
+                <p className="text-sm">{shipment.documentDetails.notes}</p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
       {/* Pricing Information */}
       <Card>
         <CardHeader>
