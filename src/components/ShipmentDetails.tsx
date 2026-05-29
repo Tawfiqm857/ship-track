@@ -78,41 +78,58 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
         <CardHeader className="bg-gradient-card">
           <div className="flex flex-col lg:flex-row items-start lg:items-start justify-between space-y-4 lg:space-y-0">
             <div className="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6 w-full">
-              {/* Image Gallery */}
-              <div className="relative group w-full sm:w-auto flex-shrink-0">
-                <img
-                  src={images[currentImageIndex]}
-                  alt={shipment.productName}
-                  className="w-full sm:w-[280px] lg:w-[350px] h-48 sm:h-56 lg:h-64 rounded-xl object-cover shadow-card border border-border/50 transition-transform duration-300 group-hover:scale-105"
-                />
-                {images.length > 1 && (
-                  <>
-                    <button
-                      onClick={prevImage}
-                      className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-all duration-200 hover:scale-110 backdrop-blur-sm"
-                    >
-                      <ChevronLeft className="h-4 w-4" />
-                    </button>
-                    <button
-                      onClick={nextImage}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-all duration-200 hover:scale-110 backdrop-blur-sm"
-                    >
-                      <ChevronRight className="h-4 w-4" />
-                    </button>
-                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex space-x-1">
-                      {images.map((_, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => setCurrentImageIndex(idx)}
-                          className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                            idx === currentImageIndex ? 'bg-white scale-125' : 'bg-white/50 hover:bg-white/75'
-                          }`}
-                        />
-                      ))}
+              {/* Visual: Image gallery for products, envelope artwork for documents */}
+              {isDocument ? (
+                <div className="relative w-full sm:w-[280px] lg:w-[350px] h-48 sm:h-56 lg:h-64 flex-shrink-0 rounded-xl overflow-hidden border border-border/50 shadow-card bg-gradient-to-br from-primary/15 via-primary/5 to-accent/20 flex items-center justify-center">
+                  <div className="absolute inset-0 opacity-30" style={{
+                    backgroundImage: 'repeating-linear-gradient(45deg, hsl(var(--primary)/0.15) 0 10px, transparent 10px 20px)'
+                  }} />
+                  <div className="relative flex flex-col items-center text-center px-4">
+                    <div className="p-4 rounded-2xl bg-background/80 backdrop-blur shadow-lg mb-3">
+                      <Mail className="h-12 w-12 sm:h-14 sm:w-14 text-primary" />
                     </div>
-                  </>
-                )}
-              </div>
+                    <Badge variant="outline" className="bg-background/80 backdrop-blur">
+                      <Stamp className="h-3 w-3 mr-1" />
+                      Documents & Mail
+                    </Badge>
+                  </div>
+                </div>
+              ) : (
+                <div className="relative group w-full sm:w-auto flex-shrink-0">
+                  <img
+                    src={images[currentImageIndex]}
+                    alt={shipment.productName}
+                    className="w-full sm:w-[280px] lg:w-[350px] h-48 sm:h-56 lg:h-64 rounded-xl object-cover shadow-card border border-border/50 transition-transform duration-300 group-hover:scale-105"
+                  />
+                  {images.length > 1 && (
+                    <>
+                      <button
+                        onClick={prevImage}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-all duration-200 hover:scale-110 backdrop-blur-sm"
+                      >
+                        <ChevronLeft className="h-4 w-4" />
+                      </button>
+                      <button
+                        onClick={nextImage}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-all duration-200 hover:scale-110 backdrop-blur-sm"
+                      >
+                        <ChevronRight className="h-4 w-4" />
+                      </button>
+                      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex space-x-1">
+                        {images.map((_, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => setCurrentImageIndex(idx)}
+                            className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                              idx === currentImageIndex ? 'bg-white scale-125' : 'bg-white/50 hover:bg-white/75'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
+              )}
               
               <div className="flex-1 min-w-0 w-full">
                 <CardTitle className="text-xl sm:text-2xl break-words">{shipment.productName}</CardTitle>
