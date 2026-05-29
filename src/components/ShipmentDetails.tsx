@@ -346,38 +346,42 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
                   </span>
                 </div>
               )}
-              <div className="flex items-center justify-between">
-                {shipment.unpaidFees?.customDuties ? (
-                  <div className="flex flex-col space-y-1">
-                    <div className="flex items-center space-x-1">
-                      <span className="text-sm">Custom Duties</span>
-                      <AlertCircle className="h-3 w-3 text-warning" />
+              {(shipment.pricing.customDuties > 0 || shipment.unpaidFees?.customDuties) && (
+                <div className="flex items-center justify-between">
+                  {shipment.unpaidFees?.customDuties ? (
+                    <div className="flex flex-col space-y-1">
+                      <div className="flex items-center space-x-1">
+                        <span className="text-sm">Custom Duties</span>
+                        <AlertCircle className="h-3 w-3 text-warning" />
+                      </div>
+                      <span className="text-xs text-warning">Unpaid - Required before delivery</span>
                     </div>
-                    <span className="text-xs text-warning">Unpaid - Required before delivery</span>
-                  </div>
-                ) : (
-                  <span className="text-sm">Custom Duties</span>
-                )}
-                <span className={`font-medium ${shipment.unpaidFees?.customDuties ? 'text-warning' : ''}`}>
-                  {shipment.pricing.currency} {shipment.pricing.customDuties.toLocaleString()}
-                </span>
-              </div>
-              <div className="flex items-center justify-between">
-                {shipment.unpaidFees?.taxes ? (
-                  <div className="flex flex-col space-y-1">
-                    <div className="flex items-center space-x-1">
-                      <span className="text-sm">Taxes & Fees</span>
-                      <AlertCircle className="h-3 w-3 text-warning" />
+                  ) : (
+                    <span className="text-sm">Custom Duties</span>
+                  )}
+                  <span className={`font-medium ${shipment.unpaidFees?.customDuties ? 'text-warning' : ''}`}>
+                    {shipment.pricing.currency} {shipment.pricing.customDuties.toLocaleString()}
+                  </span>
+                </div>
+              )}
+              {(shipment.pricing.taxes > 0 || shipment.unpaidFees?.taxes) && (
+                <div className="flex items-center justify-between">
+                  {shipment.unpaidFees?.taxes ? (
+                    <div className="flex flex-col space-y-1">
+                      <div className="flex items-center space-x-1">
+                        <span className="text-sm">Taxes & Fees</span>
+                        <AlertCircle className="h-3 w-3 text-warning" />
+                      </div>
+                      <span className="text-xs text-warning">Unpaid - Required before delivery</span>
                     </div>
-                    <span className="text-xs text-warning">Unpaid - Required before delivery</span>
-                  </div>
-                ) : (
-                  <span className="text-sm">Taxes & Fees</span>
-                )}
-                <span className={`font-medium ${shipment.unpaidFees?.taxes ? 'text-warning' : ''}`}>
-                  {shipment.pricing.currency} {shipment.pricing.taxes.toLocaleString()}
-                </span>
-              </div>
+                  ) : (
+                    <span className="text-sm">Taxes & Fees</span>
+                  )}
+                  <span className={`font-medium ${shipment.unpaidFees?.taxes ? 'text-warning' : ''}`}>
+                    {shipment.pricing.currency} {shipment.pricing.taxes.toLocaleString()}
+                  </span>
+                </div>
+              )}
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <Clock className="h-4 w-4 text-muted-foreground" />
