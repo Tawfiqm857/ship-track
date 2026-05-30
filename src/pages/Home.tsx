@@ -138,6 +138,60 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Customer Support Section */}
+      <section className="py-12 sm:py-16 md:py-20">
+        <div className="container mx-auto px-4">
+          <div className="rounded-3xl bg-gradient-to-br from-primary/10 via-background to-accent/10 border p-6 sm:p-10 md:p-14">
+            <div className="grid gap-8 md:grid-cols-2 items-center">
+              <div>
+                <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary mb-4">
+                  <Headphones className="h-3.5 w-3.5" /> Customer Support
+                </div>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
+                  Real humans, ready when you need them
+                </h2>
+                <p className="text-muted-foreground text-base sm:text-lg mb-6">
+                  Questions about a shipment, billing, or unpaid fees? Our support team replies in under an hour, every day of the year.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Button size="lg" asChild className="gap-2">
+                    <Link to="/contact"><MessageCircle className="h-4 w-4" /> Contact Support</Link>
+                  </Button>
+                  <Button size="lg" variant="outline" asChild className="gap-2">
+                    <a href="mailto:support@maritimetracks.com"><Mail className="h-4 w-4" /> Email us</a>
+                  </Button>
+                </div>
+              </div>
+              <div className="grid gap-3">
+                {[
+                  { icon: MessageCircle, title: 'Live chat', desc: 'Tap the chat bubble — average reply 4 min.' },
+                  { icon: Mail, title: 'support@maritimetracks.com', desc: 'Detailed help by email, 24/7.' },
+                  { icon: Phone, title: '+1 (800) 555-1234', desc: 'Toll-free, Mon–Sun 6 AM–10 PM PT.' },
+                ].map((item) => (
+                  <Card key={item.title} className="border-border/50 card-hover">
+                    <CardContent className="flex items-start gap-4 p-4">
+                      <div className="rounded-lg bg-primary/10 p-2.5 flex-shrink-0">
+                        <item.icon className="h-5 w-5 text-primary" />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="font-semibold text-sm break-words">{item.title}</p>
+                        <p className="text-xs text-muted-foreground mt-0.5">{item.desc}</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+                <div className="flex items-center gap-2 text-xs text-muted-foreground pt-1">
+                  <div className="flex">
+                    {[...Array(5)].map((_, i) => <Star key={i} className="h-3.5 w-3.5 fill-warning text-warning" />)}
+                  </div>
+                  <span>4.9/5 from 12,000+ customers</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="bg-muted py-12 sm:py-16 md:py-20">
         <div className="container mx-auto px-4">
