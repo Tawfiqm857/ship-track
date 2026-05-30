@@ -5,9 +5,11 @@ import { Progress } from '@/components/ui/progress';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { type Shipment } from '@/data/shipments';
+import { useAuth } from '@/contexts/AuthContext';
+import { toast } from 'sonner';
 import ShipmentMap from './ShipmentMap';
 import TimelineProgress from './TimelineProgress';
-import { Package, User, MapPin, Weight, Ruler, Calendar, DollarSign, Shield, Clock, ChevronLeft, ChevronRight, AlertCircle, Mail, FileText, Lock, Stamp, FileCheck, Send, Eye } from 'lucide-react';
+import { Package, User, MapPin, Weight, Ruler, Calendar, DollarSign, Shield, Clock, ChevronLeft, ChevronRight, AlertCircle, Mail, FileText, Lock, Stamp, FileCheck, Send, Eye, Download, CheckCircle2 } from 'lucide-react';
 import { useState } from 'react';
 
 interface ShipmentDetailsProps {
@@ -15,6 +17,7 @@ interface ShipmentDetailsProps {
 }
 
 const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
+  const { isAuthenticated } = useAuth();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const isDocument = shipment.category === 'document';
   const images = (shipment.productImages && shipment.productImages.length > 0)
@@ -25,13 +28,50 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
   const [unlocked, setUnlocked] = useState(!requiresPassword);
   const [passwordInput, setPasswordInput] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [downloading, setDownloading] = useState(false);
 
   const tryUnlock = () => {
+    if (!passwordInput.trim()) {
+      setPasswordError('Please enter a password.');
+      return;
+    }
     if (passwordInput.trim() === shipment.viewPassword) {
       setUnlocked(true);
       setPasswordError('');
+      setPasswordInput('');
+      toast.success('Access granted', { description: 'Files are now unlocked.' });
     } else {
       setPasswordError('Incorrect password. Please try again.');
+      toast.error('Incorrect password');
+    }
+  };
+
+  const handleDownloadAll = async () => {
+    if (!images.length) return;
+    setDownloading(true);
+    try {
+      for (let i = 0; i < images.length; i++) {
+        const url = images[i];
+        try {
+          const res = await fetch(url, { mode: 'cors' });
+          const blob = await res.blob();
+          const objectUrl = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = objectUrl;
+          const ext = url.split('.').pop()?.split('?')[0] || 'file';
+          a.download = `${shipment.trackingCode}-file-${i + 1}.${ext}`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(objectUrl);
+        } catch {
+          // fallback: open in new tab
+          window.open(url, '_blank');
+        }
+      }
+      toast.success('Download started', { description: `${images.length} file(s) saved.` });
+    } finally {
+      setDownloading(false);
     }
   };
   
@@ -143,17 +183,22 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
                         <Input
                           type="password"
                           value={passwordInput}
-                          onChange={(e) => setPasswordInput(e.target.value)}
+                          onChange={(e) => { setPasswordInput(e.target.value); if (passwordError) setPasswordError(''); }}
                           onKeyDown={(e) => e.key === 'Enter' && tryUnlock()}
                           placeholder="Password"
-                          className="h-9 text-sm"
+                          aria-invalid={!!passwordError}
+                          className={`h-9 text-sm ${passwordError ? 'border-destructive focus-visible:ring-destructive' : ''}`}
                         />
                         <Button size="sm" onClick={tryUnlock} className="h-9 px-3">
                           <Eye className="h-4 w-4" />
                         </Button>
                       </div>
-                      {passwordError && (
-                        <p className="text-xs text-destructive mt-2">{passwordError}</p>
+                      {passwordError ? (
+                        <p className="text-xs text-destructive mt-2 flex items-center gap-1">
+                          <AlertCircle className="h-3 w-3" /> {passwordError}
+                        </p>
+                      ) : (
+                        <p className="text-xs text-muted-foreground mt-2">Contact support if you don't have the password.</p>
                       )}
                     </div>
                   )}
@@ -180,9 +225,23 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
                 <p className="text-xs sm:text-sm font-mono text-primary mt-1 break-all">
                   {shipment.trackingCode}
                 </p>
-                <Badge className={`mt-2 ${getStatusColor(shipment.status)}`}>
-                  {getStatusText(shipment.status)}
-                </Badge>
+                <div className="mt-2 flex flex-wrap items-center gap-2">
+                  <Badge className={getStatusColor(shipment.status)}>
+                    {getStatusText(shipment.status)}
+                  </Badge>
+                  {isAuthenticated && hasImages && unlocked && (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={handleDownloadAll}
+                      disabled={downloading}
+                      className="h-7 gap-1.5"
+                    >
+                      <Download className="h-3.5 w-3.5" />
+                      {downloading ? 'Downloading…' : `Download files (${images.length})`}
+                    </Button>
+                  )}
+                </div>
                 
                 {/* Delivery Progress */}
                 <div className="mt-4 space-y-2">

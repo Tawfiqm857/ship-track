@@ -13,7 +13,7 @@ import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/hooks/use-toast';
 import { saveUserShipment, generateTrackingCode } from '@/lib/userShipments';
 import type { Shipment, ShipmentCategory } from '@/data/shipments';
-import { Package, Mail, ArrowLeft } from 'lucide-react';
+import { Package, Mail, ArrowLeft, CheckCircle2, User, MapPin, Calendar, DollarSign, FileText } from 'lucide-react';
 
 const CreateShipment = () => {
   const { isAuthenticated } = useAuth();
@@ -48,22 +48,30 @@ const CreateShipment = () => {
   });
   const [files, setFiles] = useState<File[]>([]);
   const [uploading, setUploading] = useState(false);
+  const [step, setStep] = useState<'form' | 'confirm'>('form');
 
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   const update = (k: string, v: string) => setForm((f) => ({ ...f, [k]: v }));
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const shippingNum = parseFloat(form.shipping || '0') || 0;
+  const subtotalNum = category === 'product' ? parseFloat(form.subtotal || '0') || 0 : 0;
+  const totalNum = shippingNum + subtotalNum;
 
+  const handleReview = (e: React.FormEvent) => {
+    e.preventDefault();
     const requiredBase = ['productName', 'senderName', 'recipientName', 'estimatedDelivery'];
     for (const k of requiredBase) {
       if (!(form as any)[k]) {
-        toast({ title: 'Missing fields', description: `Please fill in all required fields.`, variant: 'destructive' });
+        toast({ title: 'Missing fields', description: 'Please fill in all required fields.', variant: 'destructive' });
         return;
       }
     }
+    setStep('confirm');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
+  const handleSubmit = async () => {
     // Upload any selected files to cloud storage
     let uploadedUrls: string[] = [];
     if (files.length > 0) {
@@ -88,8 +96,8 @@ const CreateShipment = () => {
       setUploading(false);
     }
 
-    const shipping = parseFloat(form.shipping || '0') || 0;
-    const subtotal = category === 'product' ? parseFloat(form.subtotal || '0') || 0 : 0;
+    const shipping = shippingNum;
+    const subtotal = subtotalNum;
     const trackingCode = generateTrackingCode(category === 'document' ? 'DOC' : 'PKG');
     const today = new Date().toISOString().split('T')[0];
 
@@ -175,6 +183,112 @@ const CreateShipment = () => {
     navigate('/tracking');
   };
 
+  if (step === 'confirm') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background to-muted py-8">
+        <div className="container mx-auto px-4 max-w-3xl">
+          <Button variant="ghost" size="sm" onClick={() => setStep('form')} className="mb-4" disabled={uploading}>
+            <ArrowLeft className="h-4 w-4 mr-2" /> Back to edit
+          </Button>
+          <Card>
+            <CardHeader className="bg-gradient-to-br from-primary/10 to-transparent">
+              <CardTitle className="flex items-center gap-2">
+                <CheckCircle2 className="h-5 w-5 text-primary" />
+                Review & Confirm Shipment
+              </CardTitle>
+              <CardDescription>Please verify the details below before saving.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6 pt-6">
+              <section className="space-y-2">
+                <h3 className="text-sm font-semibold flex items-center gap-2 text-muted-foreground uppercase tracking-wide">
+                  {category === 'document' ? <Mail className="h-4 w-4" /> : <Package className="h-4 w-4" />}
+                  {category === 'document' ? 'Document' : 'Product'}
+                </h3>
+                <p className="text-base font-medium">{form.productName}</p>
+              </section>
+
+              <Separator />
+
+              <div className="grid sm:grid-cols-2 gap-6">
+                <section className="space-y-1">
+                  <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-1"><User className="h-3 w-3" /> Sender</h3>
+                  <p className="font-medium text-sm">{form.senderName}</p>
+                  <p className="text-sm text-muted-foreground">{form.senderCity}{form.senderCountry ? `, ${form.senderCountry}` : ''}</p>
+                </section>
+                <section className="space-y-1">
+                  <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-1"><MapPin className="h-3 w-3" /> Recipient</h3>
+                  <p className="font-medium text-sm">{form.recipientName}</p>
+                  <p className="text-sm text-muted-foreground">{form.recipientCity}{form.recipientCountry ? `, ${form.recipientCountry}` : ''}</p>
+                </section>
+              </div>
+
+              <Separator />
+
+              <section className="grid sm:grid-cols-2 gap-6">
+                <div className="space-y-1">
+                  <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-1"><Calendar className="h-3 w-3" /> Expected Delivery</h3>
+                  <p className="font-medium text-sm">{new Date(form.estimatedDelivery).toLocaleDateString()}</p>
+                </div>
+                <div className="space-y-1">
+                  <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Service Priority</h3>
+                  <p className="font-medium text-sm capitalize">{form.priority}</p>
+                </div>
+              </section>
+
+              {category === 'document' && (
+                <>
+                  <Separator />
+                  <section className="space-y-2">
+                    <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-1"><FileText className="h-3 w-3" /> Document Info</h3>
+                    <div className="grid sm:grid-cols-3 gap-3 text-sm">
+                      <div><span className="text-muted-foreground">Type:</span> <span className="capitalize font-medium">{form.documentType.replace('-', ' ')}</span></div>
+                      <div><span className="text-muted-foreground">Envelope:</span> <span className="capitalize font-medium">{form.envelopeSize.replace('-', ' ')}</span></div>
+                      <div><span className="text-muted-foreground">Confidentiality:</span> <span className="capitalize font-medium">{form.confidentiality.replace('-', ' ')}</span></div>
+                    </div>
+                  </section>
+                </>
+              )}
+
+              <Separator />
+
+              <section className="space-y-3">
+                <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-1"><DollarSign className="h-3 w-3" /> Cost Summary</h3>
+                {subtotalNum > 0 && (
+                  <div className="flex justify-between text-sm">
+                    <span>Declared Value</span><span>USD {subtotalNum.toLocaleString()}</span>
+                  </div>
+                )}
+                <div className="flex justify-between text-sm">
+                  <span>Shipping Fee</span><span>USD {shippingNum.toLocaleString()}</span>
+                </div>
+                <Separator />
+                <div className="flex justify-between text-base font-bold">
+                  <span>Total</span><span className="text-primary">USD {totalNum.toLocaleString()}</span>
+                </div>
+              </section>
+
+              {files.length > 0 && (
+                <p className="text-xs text-muted-foreground">{files.length} file(s) will be uploaded on confirm.</p>
+              )}
+              {form.viewPassword && (
+                <p className="text-xs text-muted-foreground">Images will be password-protected.</p>
+              )}
+
+              <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                <Button variant="outline" className="flex-1" onClick={() => setStep('form')} disabled={uploading}>
+                  Edit Details
+                </Button>
+                <Button className="flex-1" size="lg" onClick={handleSubmit} disabled={uploading}>
+                  {uploading ? 'Saving…' : 'Confirm & Save Shipment'}
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-muted py-8">
       <div className="container mx-auto px-4 max-w-3xl">
@@ -188,7 +302,7 @@ const CreateShipment = () => {
             <CardDescription>Track a physical product or a mailed document.</CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleReview} className="space-y-6">
               {/* Category selector */}
               <div className="space-y-2">
                 <Label>Shipment Type</Label>
@@ -400,8 +514,8 @@ const CreateShipment = () => {
                 </div>
               </div>
 
-              <Button type="submit" className="w-full" size="lg" disabled={uploading}>
-                {uploading ? 'Uploading…' : 'Create Shipment'}
+              <Button type="submit" className="w-full" size="lg">
+                Review Shipment
               </Button>
             </form>
           </CardContent>
