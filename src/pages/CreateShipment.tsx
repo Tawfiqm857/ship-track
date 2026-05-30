@@ -96,8 +96,8 @@ const CreateShipment = () => {
       setUploading(false);
     }
 
-    const shipping = parseFloat(form.shipping || '0') || 0;
-    const subtotal = category === 'product' ? parseFloat(form.subtotal || '0') || 0 : 0;
+    const shipping = shippingNum;
+    const subtotal = subtotalNum;
     const trackingCode = generateTrackingCode(category === 'document' ? 'DOC' : 'PKG');
     const today = new Date().toISOString().split('T')[0];
 
