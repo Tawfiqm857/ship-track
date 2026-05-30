@@ -220,9 +220,23 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
                 <p className="text-xs sm:text-sm font-mono text-primary mt-1 break-all">
                   {shipment.trackingCode}
                 </p>
-                <Badge className={`mt-2 ${getStatusColor(shipment.status)}`}>
-                  {getStatusText(shipment.status)}
-                </Badge>
+                <div className="mt-2 flex flex-wrap items-center gap-2">
+                  <Badge className={getStatusColor(shipment.status)}>
+                    {getStatusText(shipment.status)}
+                  </Badge>
+                  {isAuthenticated && hasImages && unlocked && (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={handleDownloadAll}
+                      disabled={downloading}
+                      className="h-7 gap-1.5"
+                    >
+                      <Download className="h-3.5 w-3.5" />
+                      {downloading ? 'Downloading…' : `Download files (${images.length})`}
+                    </Button>
+                  )}
+                </div>
                 
                 {/* Delivery Progress */}
                 <div className="mt-4 space-y-2">
