@@ -48,10 +48,28 @@ const CreateShipment = () => {
   });
   const [files, setFiles] = useState<File[]>([]);
   const [uploading, setUploading] = useState(false);
+  const [step, setStep] = useState<'form' | 'confirm'>('form');
 
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   const update = (k: string, v: string) => setForm((f) => ({ ...f, [k]: v }));
+
+  const shippingNum = parseFloat(form.shipping || '0') || 0;
+  const subtotalNum = category === 'product' ? parseFloat(form.subtotal || '0') || 0 : 0;
+  const totalNum = shippingNum + subtotalNum;
+
+  const handleReview = (e: React.FormEvent) => {
+    e.preventDefault();
+    const requiredBase = ['productName', 'senderName', 'recipientName', 'estimatedDelivery'];
+    for (const k of requiredBase) {
+      if (!(form as any)[k]) {
+        toast({ title: 'Missing fields', description: 'Please fill in all required fields.', variant: 'destructive' });
+        return;
+      }
+    }
+    setStep('confirm');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
