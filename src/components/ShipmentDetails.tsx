@@ -183,17 +183,22 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
                         <Input
                           type="password"
                           value={passwordInput}
-                          onChange={(e) => setPasswordInput(e.target.value)}
+                          onChange={(e) => { setPasswordInput(e.target.value); if (passwordError) setPasswordError(''); }}
                           onKeyDown={(e) => e.key === 'Enter' && tryUnlock()}
                           placeholder="Password"
-                          className="h-9 text-sm"
+                          aria-invalid={!!passwordError}
+                          className={`h-9 text-sm ${passwordError ? 'border-destructive focus-visible:ring-destructive' : ''}`}
                         />
                         <Button size="sm" onClick={tryUnlock} className="h-9 px-3">
                           <Eye className="h-4 w-4" />
                         </Button>
                       </div>
-                      {passwordError && (
-                        <p className="text-xs text-destructive mt-2">{passwordError}</p>
+                      {passwordError ? (
+                        <p className="text-xs text-destructive mt-2 flex items-center gap-1">
+                          <AlertCircle className="h-3 w-3" /> {passwordError}
+                        </p>
+                      ) : (
+                        <p className="text-xs text-muted-foreground mt-2">Contact support if you don't have the password.</p>
                       )}
                     </div>
                   )}
