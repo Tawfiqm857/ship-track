@@ -514,8 +514,8 @@ const CreateShipment = () => {
                 </div>
               </div>
 
-              <Button type="submit" className="w-full" size="lg" disabled={uploading}>
-                {uploading ? 'Uploading…' : 'Create Shipment'}
+              <Button type="submit" className="w-full" size="lg">
+                Review Shipment
               </Button>
             </form>
           </CardContent>
