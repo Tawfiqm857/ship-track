@@ -71,17 +71,7 @@ const CreateShipment = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const requiredBase = ['productName', 'senderName', 'recipientName', 'estimatedDelivery'];
-    for (const k of requiredBase) {
-      if (!(form as any)[k]) {
-        toast({ title: 'Missing fields', description: `Please fill in all required fields.`, variant: 'destructive' });
-        return;
-      }
-    }
-
+  const handleSubmit = async () => {
     // Upload any selected files to cloud storage
     let uploadedUrls: string[] = [];
     if (files.length > 0) {
