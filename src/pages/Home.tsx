@@ -88,6 +88,27 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Trust / Stats Strip */}
+      <section className="border-y bg-card/50 backdrop-blur">
+        <div className="container mx-auto px-4 py-8 sm:py-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            {[
+              { value: '2.4M+', label: 'Shipments tracked' },
+              { value: '180+', label: 'Countries covered' },
+              { value: '99.8%', label: 'Delivery accuracy' },
+              { value: '24/7', label: 'Live support' },
+            ].map((s) => (
+              <div key={s.label} className="space-y-1">
+                <p className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
+                  {s.value}
+                </p>
+                <p className="text-xs sm:text-sm text-muted-foreground">{s.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
       <section className="py-12 sm:py-16 md:py-20 lg:py-32">
         <div className="container mx-auto px-4">
