@@ -17,6 +17,7 @@ interface ShipmentDetailsProps {
 }
 
 const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
+  const { isAuthenticated } = useAuth();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const isDocument = shipment.category === 'document';
   const images = (shipment.productImages && shipment.productImages.length > 0)
@@ -27,13 +28,50 @@ const ShipmentDetails = ({ shipment }: ShipmentDetailsProps) => {
   const [unlocked, setUnlocked] = useState(!requiresPassword);
   const [passwordInput, setPasswordInput] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [downloading, setDownloading] = useState(false);
 
   const tryUnlock = () => {
+    if (!passwordInput.trim()) {
+      setPasswordError('Please enter a password.');
+      return;
+    }
     if (passwordInput.trim() === shipment.viewPassword) {
       setUnlocked(true);
       setPasswordError('');
+      setPasswordInput('');
+      toast.success('Access granted', { description: 'Files are now unlocked.' });
     } else {
       setPasswordError('Incorrect password. Please try again.');
+      toast.error('Incorrect password');
+    }
+  };
+
+  const handleDownloadAll = async () => {
+    if (!images.length) return;
+    setDownloading(true);
+    try {
+      for (let i = 0; i < images.length; i++) {
+        const url = images[i];
+        try {
+          const res = await fetch(url, { mode: 'cors' });
+          const blob = await res.blob();
+          const objectUrl = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = objectUrl;
+          const ext = url.split('.').pop()?.split('?')[0] || 'file';
+          a.download = `${shipment.trackingCode}-file-${i + 1}.${ext}`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(objectUrl);
+        } catch {
+          // fallback: open in new tab
+          window.open(url, '_blank');
+        }
+      }
+      toast.success('Download started', { description: `${images.length} file(s) saved.` });
+    } finally {
+      setDownloading(false);
     }
   };
   
