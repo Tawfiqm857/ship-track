@@ -5,9 +5,11 @@ import { Progress } from '@/components/ui/progress';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { type Shipment } from '@/data/shipments';
+import { useAuth } from '@/contexts/AuthContext';
+import { toast } from 'sonner';
 import ShipmentMap from './ShipmentMap';
 import TimelineProgress from './TimelineProgress';
-import { Package, User, MapPin, Weight, Ruler, Calendar, DollarSign, Shield, Clock, ChevronLeft, ChevronRight, AlertCircle, Mail, FileText, Lock, Stamp, FileCheck, Send, Eye } from 'lucide-react';
+import { Package, User, MapPin, Weight, Ruler, Calendar, DollarSign, Shield, Clock, ChevronLeft, ChevronRight, AlertCircle, Mail, FileText, Lock, Stamp, FileCheck, Send, Eye, Download, CheckCircle2 } from 'lucide-react';
 import { useState } from 'react';
 
 interface ShipmentDetailsProps {
