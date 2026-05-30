@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
-import { Package, MapPin, Clock, Shield, Users, Globe } from 'lucide-react';
+import { Package, MapPin, Clock, Shield, Users, Globe, MessageCircle, Mail, Phone, HeadphonesIcon, Star } from 'lucide-react';
 import Newsletter from '@/components/Newsletter';
 
 const heroImage = '/lovable-uploads/20f186e6-74ba-4aaf-87d5-b3dd9cae547f.png';
