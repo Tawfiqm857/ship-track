@@ -13,7 +13,7 @@ import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/hooks/use-toast';
 import { saveUserShipment, generateTrackingCode } from '@/lib/userShipments';
 import type { Shipment, ShipmentCategory } from '@/data/shipments';
-import { Package, Mail, ArrowLeft } from 'lucide-react';
+import { Package, Mail, ArrowLeft, CheckCircle2, User, MapPin, Calendar, DollarSign, FileText } from 'lucide-react';
 
 const CreateShipment = () => {
   const { isAuthenticated } = useAuth();
