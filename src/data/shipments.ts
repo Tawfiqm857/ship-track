@@ -831,7 +831,7 @@ export const sampleShipments: Shipment[] = [
       lat: 34.2728,
       lng: -118.5048
     },
-    estimatedDelivery: '2026-06-01',
+    estimatedDelivery: '2026-06-11',
     pricing: {
       subtotal: 0,
       shipping: 396000.00,
@@ -883,7 +883,7 @@ export const sampleShipments: Shipment[] = [
       },
       {
         id: '4',
-        date: '2026-06-01',
+        date: '2026-06-11',
         location: 'Lauderhill, FL, USA',
         status: 'pending',
         description: 'Out for delivery to recipient mailbox',
