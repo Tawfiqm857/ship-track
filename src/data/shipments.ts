@@ -834,11 +834,11 @@ export const sampleShipments: Shipment[] = [
     estimatedDelivery: '2026-06-11',
     pricing: {
       subtotal: 0,
-      shipping: 396000.00,
+      shipping: 396.00,
       insurance: 0,
       customDuties: 0,
       taxes: 0,
-      total: 396000.00,
+      total: 396.00,
       currency: 'USD'
     },
     unpaidFees: {
